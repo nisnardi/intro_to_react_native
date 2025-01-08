@@ -2,10 +2,32 @@
 
 ## Introducción
 
-- [Introducción a React Native](courseintro.md)
-- [¿Qué es Javascript??](javascriptintro.md)
+- [Programación, qué es y para qué nos sirve?](programacion.md)
+- [¿Qué es internet y como funciona?](internet.md#qué-es)
+- [Introducción a React Native](intro.md)
+
+## Entorno
+
 - [Configuración del entorno](setupjs.md)
 
+## Git / Github
+
+- [¿Qué es y para qué sirve?](git.md)
+
+## JavaScript
+
+- [Definición](javascript/definicion.md)
+- [Historia](javascript/historia.md)
+- [Versiones](javascript/versiones.md)
+- [Ambientes](javascript/ambientes.md)
+- [Variables](javascript/variables.md)
+- [String y Templates](javascript/string.md)
+- [Numbers](javascript/numbers.md)
+- [Boolean](javascript/boolean.md)
+- [Undefined](javascript/undefined.md)
+- [typeof](javascript/typeof.md)
+
+<!--
 ## Variables
 
 - [¿Qué es var?](var.md)
@@ -299,3 +321,4 @@
 - [Estilo básico](basicstylinghw.md)
 - [Flexbox para diseño de layouts](flexboxlayouthw.md)
 - [Manejo de entradas de usuario y API's](handlinguserinputhw.md)
+-->
