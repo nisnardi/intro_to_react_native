@@ -23,6 +23,19 @@
 - [Boolean](javascript/boolean.md)
 - [Undefined](javascript/undefined.md)
 - [typeof](javascript/typeof.md)
+- [Operadores](javascript/operadores.md)
+- [Comparación](javascript/comparacion.md)
+- [Operadores lógicos](javascript/operadoreslogicos.md)
+- [Métodos de String y caracteres especiales](javascript/metodosdestring.md)
+- [Métodos de Number](javascript/numbersmetodos.md)
+- [Estructuras de control](javascript/estructurasdecontrol.md)
+- [Truthy and Falsy](javascript/truthyandfalsy.md)
+- [Estructuras de repetición](javascript/estructurasderepeticion.md)
+- [Funciones](javascript/funciones.md)
+- [Array](javascript/array.md)
+- [Iteradores](javascript/iteradores.md)
+- [Objetos](javascript/objetos.md)
+- [Callback](javascript/callback.md)
 
 <!--
 ## Variables
