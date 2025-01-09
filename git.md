@@ -10,11 +10,11 @@ Gracias al software de control de versiones, podés mantener tus archivos **orga
 
 Git nació en **2005**, después de que se venga abajo la relación entre la comunidad que desarrollaba el núcleo de Linux y la compañía responsable de BitKeeper, el sistema de control de versiones que venían usando hasta entonces. A estos muchachos (y en particular a Linus Torvalds, el creador de Linux) se les ocurrió que la mejor forma de reemplazarla era desarrollando una herramienta propia. Desde entonces Git ha logrado evolucionar manteniendo su **diseño sencillo** y su tremenda **eficiencia**, incluso para manejar proyectos muy grandes.
 
-[Guia para instalar Git](https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git)
-[Guia Git en inglés](https://github.com/git-guides/install-git)
-[Cómo crear una cuenta en Github](https://docs.github.com/es/get-started/start-your-journey/creating-an-account-on-github)
-[Comandos de CMD para Windows](https://www.stationx.net/windows-command-line-cheat-sheet)
-[Comandos de terminal para Mac](https://github.com/0nn0/terminal-mac-cheatsheet)
+- [Guia para instalar Git](https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Instalaci%C3%B3n-de-Git)
+- [Guia Git en inglés](https://github.com/git-guides/install-git)
+- [Cómo crear una cuenta en Github](https://docs.github.com/es/get-started/start-your-journey/creating-an-account-on-github)
+- [Comandos de CMD para Windows](https://www.stationx.net/windows-command-line-cheat-sheet)
+- [Comandos de terminal para Mac](https://github.com/0nn0/terminal-mac-cheatsheet)
 
 ## Lista comandos Git:
 
