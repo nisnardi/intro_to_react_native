@@ -100,7 +100,7 @@ Existe un protocolo llamado Protocolo de Internet (IP), en la actualidad encontr
 - Tiene una longitud de 32 bits
 - Se pueden generar 4 Billones de direcciónes únicas
 
-![IPv4 Binario](../assets/internet/Ipv4_address_Spanish.svg.png)
+![IPv4 Binario](assets/internet/ipv4.png)
 
 [IPv6](https://es.wikipedia.org/wiki/IPv6)
 
@@ -111,11 +111,11 @@ Existe un protocolo llamado Protocolo de Internet (IP), en la actualidad encontr
 - Tiene una longitud de 128 bits
 - Se pueden generar muchas pero muchas direcciones únicas
 
-![IPv6 Binario](../assets/internet/Ipv6_address-es-corrected.svg.png)
+![IPv6 Binario](assets/internet/ipv6.png)
 
 ### DNS: Domain Name System
 
-Los seres humanos somos buenos para recordar nombres pero no tanto con números. Es por esto que existe un concepto denominado [Sistema de nombres de dominio o Domain Name System (DNS)](https://es.wikipedia.org/wiki/Sistema_de_nombres_de_dominio) que permite que nosotros recordemos la dirección de google.com y las computadoras van a traducir ese nombre en la dirección/es IP que corresponda/n.
+Los seres humanos somos buenos para recordar nombres pero no tanto con números. Es por esto que existe un concepto denominado [Sistema de nombres de dominio o Domain Name System (DNS)](https://es.wikipedia.org/wiki/Sistema_de_nombres_de_dominio) que permite que nosotros recordemos la dirección de google.com y las computadoras van a traducir ese nombre en la dirección/es IP que correspondan.
 
 **Ejemplo:**
 

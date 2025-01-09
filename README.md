@@ -4,7 +4,7 @@
 
 - [Programación, qué es y para qué nos sirve?](programacion.md)
 - [¿Qué es internet y como funciona?](internet.md#qué-es)
-- [Introducción a React Native](intro.md)
+- [Introducción a React Native](reactnative.md)
 
 ## Entorno
 
