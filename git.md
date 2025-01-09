@@ -76,7 +76,7 @@ En Git se trabaja con branches (ramas en español), originalmente se crea la mas
 
 ## Presentación:
 
-Presentación hecha en Google -> [Git-Cheat Sheet](../assets/git/ppt/git-cheatSheet.pdf)
+Presentación hecha en Google -> [Git-Cheat Sheet](assets/git/ppt/cheatsheet.pdf)
 
 ## Referencias:
 

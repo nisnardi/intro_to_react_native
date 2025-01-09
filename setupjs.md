@@ -1,6 +1,6 @@
-# Configuración de Javascript en Mac
+# Configuración del entorno de desarrollo para Javascript
 
-Para configurar el entorno de desarrollo de JavaScript con Visual Studio Code en una Mac o Windows, siga los siguientes pasos:
+Para configurar el entorno de desarrollo de JavaScript con Visual Studio Code, siga los siguientes pasos:
 
 ### 1. Instalar Visual Studio Code
 
@@ -53,7 +53,7 @@ Para instalar extensiones:
 - Guarde el archivo con la extensión `.js` para identificarlo como un archivo JavaScript.
 - Para crear un proyecto más estructurado, puede seleccionar `Archivo` > `Nueva Carpeta` para crear una nueva carpeta de proyecto y guardar su archivo `.js` dentro de esta carpeta.
 
-### 5. Configure el entorno de su proyec
+### 5. Configure el entorno de su proyecto
 
 Si estás trabajando en una aplicación Web o necesitas un servidor:
 
@@ -64,14 +64,14 @@ Si estás trabajando en una aplicación Web o necesitas un servidor:
 
 - Escriba su código JavaScript en el archivo `.js` que ha creado. Por ejemplo
   ```javascript
-  console.log("Hello, JavaScript in VS Code!");
+  console.log("Hola, JavaScript en VS Code!");
   ```
 - Para ejecutar tu código, utiliza el terminal integrado en VS Code. Escriba `node <yourfilename>.js` y pulse Enter.
 
 ### 7. Depuración de JavaScript
 
 - Establece puntos de interrupción pulsando a la izquierda del número de línea donde quieres que se detenga el código.
-- Abra la barra lateral de depuración haciendo clic en el icono Ejecutar y depurar o pulsando `Cmd+Shift+D`, y luego haga clic en «Ejecutar y depurar» para iniciar la depuración
+- Abra la barra lateral de depuración haciendo clic en el icono Ejecutar y depurar o pulsando `Cmd+Shift+D`, y luego haga clic en "Ejecutar y depurar" para iniciar la depuración
 
 ### 8. Mantener todo actualizado
 
