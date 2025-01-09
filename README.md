@@ -6,13 +6,10 @@
 - [¿Qué es internet y como funciona?](internet.md#qué-es)
 - [Introducción a React Native](reactnative.md)
 
-## Entorno
+## Entorno - VS Code / Node.js / Git / Github
 
 - [Configuración del entorno](setupjs.md)
-
-## Git / Github
-
-- [¿Qué es y para qué sirve?](git.md)
+- [¿Qué son Git / Github y para qué sirven?](git.md)
 
 ## JavaScript
 

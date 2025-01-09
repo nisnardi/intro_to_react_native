@@ -2,7 +2,7 @@
 
 Como sabemos lo más común es correr este lenguaje en el browser, hacer páginas web o una app mobile. Esto cambió cuando salió Node.js
 
-### Node.js
+## Node.js
 
 [Node.js](https://nodejs.org/es/) Es una aplicación que permite ejecutar ECMAScript fuera del browser. Esto quiere decir que nos da la posibilidad de crear más tipo de aplicaciones y fué creado por [Ryan Dahl](https://es.wikipedia.org/wiki/Node.js) en el año 2009.
 
