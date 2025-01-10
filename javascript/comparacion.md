@@ -107,8 +107,3 @@ console.log(10 !== "10"); // true
 ```
 
 - Los dos últimos casos da **true** ya que no importa el valor que tengan ambos valores son distintos tipo de dato
-
-#### Práctica
-
-- [Ejercicio 34](../ejercicios/consignas/js/ej34.md)
-- [Ejercicio 35](../ejercicios/consignas/js/ej35.md)

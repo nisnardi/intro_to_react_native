@@ -81,5 +81,7 @@ console.log("El usuario es mayor de edad?: ", !resultado); // la condición es f
 
 #### Práctica
 
+- [Ejercicio 34](../ejercicios/consignas/js/ej34.md)
+- [Ejercicio 35](../ejercicios/consignas/js/ej35.md)
 - [Ejercicio 36](../ejercicios/consignas/js/ej36.md)
 - [Ejercicio 37](../ejercicios/consignas/js/ej37.md)
