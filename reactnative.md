@@ -54,5 +54,5 @@ Nuestro curso está dividido en módulos, cada uno fué diseñado para construir
 
 Este curso de React Native está diseñado para aquellos que están entusiasmados en construir aplicaciones móviles modernas. Tanto si eres un nuevo desarrollador como un programador experimentado que busca ampliar sus habilidades, React Native ofrece valiosas herramientas y oportunidades para el crecimiento profesional. Sumérgete en este curso con entusiasmo y prepárate para desbloquear un nuevo reino de posibilidades en el desarrollo de aplicaciones móviles.
 
-[Sitio oficial de React Native](https://reactnative.dev/)
-[Expo docs](https://expo.dev)
+- [Sitio oficial de React Native](https://reactnative.dev/)
+- [Expo docs](https://expo.dev)
