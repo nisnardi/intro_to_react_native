@@ -38,75 +38,26 @@
 - [Callback](javascript/callback.md)
 
 <!--
-## Variables
+Tutoriales de Expo
 
-- [¿Qué es var?](var.md)
-- [¿Qué es let?](let.md)
-- [¿Qué es const?](const.md)
-- [¿Qué es una variable global?](global.md)
-- [Variables locales](local.md)
-- [Alcance a nivel de bloque](block.md)
-- [Asignación de valores](assign.md)
-- [Actualización de valores](update.md)
-- [Hoisting - Levantamiento de variables](hoisting.md)
-- [Mejores prácticas](best.md)
-- [Ejemplos generales](genex.md)
-- [Var](varex.md)
-- [Let](letex.md)
-- [Const](constex.md)
-- [Var global](globalex.md)
-- [Var local](localex.md)
-- [Nivel de bloque](blockex.md)
-- [Usando variables](usageex.md)
+- Expo tutorial
+- EAS tutorial
+- Push notification
+- Expo Router / React Navigation
+- Firebase
+- Local DB
+- Testing
+- Estado con Redux / Zustand
+https://dev.to/b42/test-your-react-native-app-with-maestro-5bfj
 
-## Tipos de datos primitivos
 
-- [¿Qué son los tipos de datos primitivos?](intropd.md)
-- [String](string.md)
-- [Number](number.md)
-- [Boolean](boolean.md)
-- [Undefined](undefined.md)
-- [Null](null.md)
+-->
+<!--
+- [Date](date.md)
 - [Symbol](symbol.md)
 - [Bigint](bigint.md)
-
-## Tipos de datos complejos
-
-- [Object](object.md)
-- [Array](array.md)
-- [Date](date.md)
-
-## Operadores
-
-- [Operadores aritméticos](arith.md)
-- [Incremento y decremento](incdec.md)
-- [Operadores de asignación](assioper.md)
-- [Operadores de comparación](comp.md)
-- [Operadores lógicos](logic.md)
-- [Operadores Bitwise](bitwise.md)
-- [Operador condicional (ternario)](ter.md)
 - [Operadores de dispersión y resto](spread.md)
 - [Operador de coalescencia nula (null)](nulll.md)
-
-# Estructuras de control
-
-## Sentencias condicionales
-
-- [¿Qué son las sentencias condicionales?](conditional.md)
-- [Sentencia If](if.md)
-- [Sentencia if-else](ifelse.md)
-- [Sentencia else if](elseif.md)
-- [Sentencia switch](switch.md)
-- [Caso con expresiones múltiples](multiple.md)
-- [Caso por defecto](default.md)
-
-## Bucles
-
-- [¿Qué son los bucles?](whatloops.md)
-- [Bucle For](forloops.md)
-- [Bucle For con múltiples sentencias](multipleloops.md)
-- [Bucle while](while.md)
-- [Bucle Do-while](dowhile.md)
 - [Bucle For-In](forin.md)
 - [Bucle For-Of](forof.md)
 
@@ -144,14 +95,6 @@
 - [Sintaxis básica](basicsyntax.md)
 - [Retorno implícito](imreturn.md)
 - [Contexto de this](context.md)
-
-## Template Literals
-
-- [Template Literals](templit.md)
-- [Uso básico de la interpolación de cadenas (string interpolation)](binter.md)
-- [Cadenas multilínea (Multi-line strings)](multstr.md)
-- [Expresiones incrustadas (Embedded expressions)](embed.md)
-- [Plantillas etiquetadas (Tagged templates)](tag.md)
 
 ## Desestructuración (Destructuring)
 
