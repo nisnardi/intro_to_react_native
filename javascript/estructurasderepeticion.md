@@ -186,9 +186,9 @@ do {
 let numero = 1000;
 
 do {
-  console.log('número: ', numero);
+  console.log("número: ", numero);
   numero++;
-} while (numero < 10) {
+} while (numero < 10);
 ```
 
 - En este ejemplo sólo se muestra el número 1000 y luego no se vuelve a repetir la condición.

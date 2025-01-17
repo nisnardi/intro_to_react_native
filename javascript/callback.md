@@ -124,6 +124,8 @@ let numerosModificados = numeros.map(function (numero) {
 - Este concepto es fundamental en ECMAScript y lo vamos a seguir viendo al utilizar el lenguaje
 - Utilizando Callbacks es una de las varias formas que hay de hacer que nuestro código se ejecute domo si fuera sincrónico cuando no lo es
 
+<!--
 #### Prácticas
 
 - [Ejercicio 163](../ejercicios/consignas/js/ej161.md)
+-->
