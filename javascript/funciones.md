@@ -165,6 +165,7 @@ saludar("Raúl"); // Muestra en consola: Hola: Raúl!!!
 ```
 
 - También podemos utilizar una variable para asignarle la función con el parámetro esperado y obtener el mismo resultado
+- Esta forma se llama función anónima y como expresión.
 - Otra forma similar de hacer esto es utilizando el valor de retorno
 
 **Ejemplo:**

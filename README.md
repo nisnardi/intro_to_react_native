@@ -36,6 +36,21 @@
 - [Iteradores](javascript/iteradores.md)
 - [Objetos](javascript/objetos.md)
 - [Callback](javascript/callback.md)
+- [Scope](javascript/scope.md)
+- [Try & Catch](javascript/tryandcatch.md)
+- [JSON](javascript/json.md)
+- [Hoisting](javascript/hoisting.md)
+- [Más conceptos sobre Functions](javascript/advanceFunctions.md)
+- [Timers](javascript/timers.md)
+- [Promises](javascript/promises.md)
+- [Fetch](javascript/fetch.md)
+<!--
+- [Async & await](javascript/asyncandawait.md)
+- [Class](javascript/class.md)
+- [Destructuring](javascript/destructuring.md)
+- [Uso de this](javascript/this.md)
+- [Intro a TypeScript](javascript/typescript.md)
+  -->
 
 <!--
 Tutoriales de Expo
