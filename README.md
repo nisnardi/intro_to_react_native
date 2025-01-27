@@ -43,13 +43,16 @@
 - [Más conceptos sobre Functions](javascript/advanceFunctions.md)
 - [Timers](javascript/timers.md)
 - [Promises](javascript/promises.md)
-- [Fetch](javascript/fetch.md)
-<!--
 - [Async & await](javascript/asyncandawait.md)
-- [Class](javascript/class.md)
+- [Fetch](javascript/fetch.md)
 - [Destructuring](javascript/destructuring.md)
+- [Spread](javascript/spread.md)
+- [Creando objetos](javascript/creandoobjetos.md)
+
+<!--
 - [Uso de this](javascript/this.md)
 - [Intro a TypeScript](javascript/typescript.md)
+- [Unitary Testing](javascript/unitarytests.md);
   -->
 
 <!--
