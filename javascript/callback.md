@@ -128,3 +128,4 @@ let numerosModificados = numeros.map(function (numero) {
 
 - [Ejercicio 163](../ejercicios/consignas/js/ej163.md)
 - [Ejercicio 164](../ejercicios/consignas/js/ej164.md)
+- [Ejercicio 165](../ejercicios/consignas/js/ej165.md)
