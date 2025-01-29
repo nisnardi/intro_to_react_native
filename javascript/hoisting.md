@@ -97,3 +97,7 @@ let apellido = "Isnardi";
 - Para evitar problemas la regla dice utilizar siempre `let o const` antes que `var`.
 - También declarar las variables y preferentemente asignar un valor antes de ser utilizadas.
 - Para aprender más sobre Hoisting podes leer la documentación sobre [Hoisting en MDN](https://developer.mozilla.org/es/docs/Glossary/Hoisting)
+
+#### Practica
+
+- [Ejercicio 176](../ejercicios/consignas/js/ej176.md)

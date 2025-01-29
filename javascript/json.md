@@ -50,3 +50,8 @@ console.log(objetoJs);
 ```
 
 - [JSON MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+
+#### Practica
+
+- [Ejercicio 174](../ejercicios/consignas/js/ej174.md)
+- [Ejercicio 175](../ejercicios/consignas/js/ej175.md)

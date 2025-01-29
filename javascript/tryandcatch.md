@@ -79,3 +79,7 @@ console.log(loading);
 - Finalmente la carga sea con error o con éxito podemos establecer que ya no se está cargando.
 - De esta forma volvemos el estado a su forma original antes del error y manejamos el error para que la aplicación no se ve alterada.
 - [Try & catch MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/try...catch)
+
+#### Practica
+
+- [Ejercicio 173](../ejercicios/consignas/js/ej173.md)
