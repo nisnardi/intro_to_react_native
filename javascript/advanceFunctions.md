@@ -393,3 +393,9 @@ funcion();
 ```
 
 - Al igual que cuando ejecutamos una función normal podemos pasar los parámetros entre los paréntesis.
+
+#### Practica
+
+- [Ejercicio 177](../ejercicios/consignas/js/ej177.md)
+- [Ejercicio 178](../ejercicios/consignas/js/ej178.md)
+- [Ejercicio 179](../ejercicios/consignas/js/ej179.md)
