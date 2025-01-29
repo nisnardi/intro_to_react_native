@@ -216,4 +216,10 @@ funcionExterior();
 
 #### Practica
 
-- Copiar los diferentes ejemplo y probarlos localmente.
+- [Ejercicio 166](../ejercicios/consignas/js/ej166.md)
+- [Ejercicio 167](../ejercicios/consignas/js/ej167.md)
+- [Ejercicio 168](../ejercicios/consignas/js/ej168.md)
+- [Ejercicio 169](../ejercicios/consignas/js/ej169.md)
+- [Ejercicio 170](../ejercicios/consignas/js/ej170.md)
+- [Ejercicio 171](../ejercicios/consignas/js/ej171.md)
+- [Ejercicio 172](../ejercicios/consignas/js/ej172.md)

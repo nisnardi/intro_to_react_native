@@ -48,9 +48,9 @@
 - [Destructuring](javascript/destructuring.md)
 - [Spread](javascript/spread.md)
 - [Creando objetos](javascript/creandoobjetos.md)
+- [Uso de this](javascript/this.md)
 
 <!--
-- [Uso de this](javascript/this.md)
 - [Intro a TypeScript](javascript/typescript.md)
 - [Unitary Testing](javascript/unitarytests.md);
   -->
