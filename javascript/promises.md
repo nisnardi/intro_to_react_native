@@ -376,3 +376,9 @@ All settled
 
 - [Promise en MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 - [Usando promesas en MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Using_promises)
+
+#### Practica
+
+- [Ejercicio 186](../ejercicios/consignas/js/ej186.md)
+- [Ejercicio 187](../ejercicios/consignas/js/ej187.md)
+- [Ejercicio 188](../ejercicios/consignas/js/ej188.md)

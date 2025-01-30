@@ -157,3 +157,7 @@ console.log(user);
 
 - Dado que la condición es `false` estamos utilizando spread en un objeto vacío por lo cual no se agreaga o modifica ninguna propidad / valor existente.
 - Puedes aprender más sobre este tema utilizando la [guía de MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+
+#### Practica
+
+- [Ejercicio 195](../ejercicios/consignas/js/ej195.md)

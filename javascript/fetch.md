@@ -166,3 +166,8 @@ getPokemon();
 - Estas librerías nos ofrecen herramientas o configuraciones extras que nos simplifican el uso de `fetch`.
 - Para poder utilizarlas debemos instalarlas ya que no son nativas al lenguaje.
 - En caso simples podemos utilizar `fetch` pero para proyectos un poco más complejos podemos utilizar Axios o Expo-fetch (si utiliamos Expo en React Native).
+
+#### Practica
+
+- [Ejercicio 191](../ejercicios/consignas/js/ej191.md)
+- [Ejercicio 192](../ejercicios/consignas/js/ej192.md)

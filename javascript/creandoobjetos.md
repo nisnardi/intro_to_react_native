@@ -182,3 +182,9 @@ const persona2 = persona1;
 console.log(persona1 == persona2);
 console.log(persona1 === persona2);
 ```
+
+#### Practica
+
+- [Ejercicio 196](../ejercicios/consignas/js/ej196.md)
+- [Ejercicio 197](../ejercicios/consignas/js/ej197.md)
+- [Ejercicio 198](../ejercicios/consignas/js/ej198.md)

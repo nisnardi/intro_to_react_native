@@ -263,3 +263,10 @@ function saludar() {
 window.saludar();
 global.saludar();
 ```
+
+#### Practica
+
+- [Ejercicio 199](../ejercicios/consignas/js/ej199.md)
+- [Ejercicio 200](../ejercicios/consignas/js/ej200.md)
+- [Ejercicio 201](../ejercicios/consignas/js/ej201.md)
+- [Ejercicio 202](../ejercicios/consignas/js/ej202.md)

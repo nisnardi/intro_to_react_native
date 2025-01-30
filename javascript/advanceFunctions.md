@@ -399,3 +399,7 @@ funcion();
 - [Ejercicio 177](../ejercicios/consignas/js/ej177.md)
 - [Ejercicio 178](../ejercicios/consignas/js/ej178.md)
 - [Ejercicio 179](../ejercicios/consignas/js/ej179.md)
+- [Ejercicio 180](../ejercicios/consignas/js/ej180.md)
+- [Ejercicio 181](../ejercicios/consignas/js/ej181.md)
+- [Ejercicio 182](../ejercicios/consignas/js/ej182.md)
+- [Ejercicio 183](../ejercicios/consignas/js/ej183.md)

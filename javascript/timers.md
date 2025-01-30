@@ -105,3 +105,9 @@ const saludar = function (nombre, apodo) {
 
 setInterval(saludar, 1000, "Marta", "Martita");
 ```
+
+#### Practica
+
+- [Ejercicio 186](../ejercicios/consignas/js/ej186.md)
+- [Ejercicio 187](../ejercicios/consignas/js/ej187.md)
+- [Ejercicio 188](../ejercicios/consignas/js/ej188.md)

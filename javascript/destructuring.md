@@ -141,3 +141,8 @@ console.log(altura); // 1234
 ```
 
 - Puedes aprender más sobre destructuring en la [guía de MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
+
+#### Practica
+
+- [Ejercicio 193](../ejercicios/consignas/js/ej193.md)
+- [Ejercicio 194](../ejercicios/consignas/js/ej194.md)

@@ -100,3 +100,8 @@ mostrarDatosEnPantalla().then((datos) => console.log(datos));
 - Vemos en ests ejemplos como podemos utilizar `async await` para manejar promises de una mejor forma.
 - Utilizamos `try and catch` para tratar de ejecutar nuestro código y manejar cualquier error que pueda ocurrir.
 - Puedes aprender más sobre `async & await` en la [guia de MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function)
+
+#### Practica
+
+- [Ejercicio 189](../ejercicios/consignas/js/ej189.md)
+- [Ejercicio 190](../ejercicios/consignas/js/ej190.md)
