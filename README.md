@@ -49,6 +49,7 @@
 - [Spread](javascript/spread.md)
 - [Creando objetos](javascript/creandoobjetos.md)
 - [Uso de this](javascript/this.md)
+- [For of & For in](javascript/forinforof.md)
 
 <!--
 - [Intro a TypeScript](javascript/typescript.md)
