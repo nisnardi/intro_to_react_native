@@ -51,6 +51,11 @@
 - [Uso de this](javascript/this.md)
 - [For of & For in](javascript/forinforof.md)
 
+## TypeScript
+
+- [TypeScript?](typescript/intro.md)
+- [Instalar y usar TS?](typescript/installing.md)
+- [Tipos base](typescript/tiposbase.md)
 <!--
 - [Intro a TypeScript](javascript/typescript.md)
 - [Unitary Testing](javascript/unitarytests.md);
