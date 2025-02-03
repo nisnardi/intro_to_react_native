@@ -1,3 +1,0 @@
-# TypeScript
-
-## Tipos Base

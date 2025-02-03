@@ -78,4 +78,5 @@ sumar(1, 2);
 
 - Podemos ver cómo TypeScript removió los tipos numéricos de la definición de parámetros de la función sumar.
 - El código final es JavaScript puro y no hay ninguna referencia a TypeScript.
+- Si queremos ejecutar `node` tenemos que utilizar el archivo `.js` y no el `.ts`.
 - Vamos a utilizar TypeScript para nuestros proyectos y el resultado final va a ser JavaScript.
