@@ -58,11 +58,10 @@
 - [Tipos de datos](typescript/tipos_mas_comunes.md)
 - [Objetos, Alias & Interfaces](typescript/objetos_tipos_e_interfaces.md)
 - [Comninando tipos](typescript/combinando_tipos.md)
-
-- <!--
-- [Intro a TypeScript](javascript/typescript.md)
-- [Unitary Testing](javascript/unitarytests.md);
-  -->
+<!--
+[Intro a TypeScript](javascript/typescript.md)
+[Unitary Testing](javascript/unitarytests.md);
+-->
 
 <!--
 Tutoriales de Expo
