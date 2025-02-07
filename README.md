@@ -50,6 +50,7 @@
 - [Creando objetos](javascript/creandoobjetos.md)
 - [Uso de this](javascript/this.md)
 - [For of & For in](javascript/forinforof.md)
+- [Modulos](javascript/modulos.md)
 
 ## TypeScript
 
