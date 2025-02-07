@@ -30,6 +30,10 @@ nombre = 32; // TypeScript va a tirar un error.
 - En este caso obtenemos un error de TS `Type 'number' is not assignable to type 'string'` ya que puede identificar que la variable `nombre` fue inicializada con un valor de `string` entonces no permite que asignemos otro tipo de dato como `number`.
 - La regla que podemos utilizar es no especificar el tipo de dato si al declarar una variable también le asignamos el valor pero si especificar el tipo si sólo declaramos la variable para luego utilizarla.
 
+#### Practica
+
+- [Ejercicio 206](../ejercicios/consignas/ts/ej206.md)
+
 ### Arrays
 
 - Para los `arrays` TypeScript permite que la definición sea estricta o no según nuestra definición.
@@ -51,6 +55,31 @@ for (animal of animales) {
   console.log(animal.toUpperCase()); // Al poner . después de animal, VS code debería mostrar los métodos y propiedades de los string.
 }
 ```
+
+- También podemos definir los arrays de la siguiente manera `Array<tipo de dato>`.
+- En el caso del string sería `Array<string>` y si queremos una colección de números `Array<number>`
+
+```typescript
+const coleccion: Array<number> = [10, 20, 30];
+
+class Persona {
+  nombre: string;
+
+  constructor(nombre: string) {
+    this.nombre = nombre;
+  }
+}
+
+const persona1 = new Persona("Nicolas");
+const persona2 = new Persona("Axel");
+const personas: Array<Persona> = [persona1, persona2];
+```
+
+- Podemos ver que podemos definir un Array ya sea de números u objetos Persona.
+
+#### Practica
+
+- [Ejercicio 207](../ejercicios/consignas/ts/ej207.md)
 
 ### Any
 
@@ -101,6 +130,7 @@ sumar(2, 4);
 ```
 
 - Si una función retorna una promesa podemos utilizar el tipo `Promise` y establecer que tipo de valor se resuelve de misma utilizando `<tipo_de_valor>`.
+- Con Promise se da una situación similar a la de Array donde podemos establecer entre `<tipo de dato>` el tipo de dato que retorna.
 
 ```typescript
 // Recordemos que async siempre retorna una promesa pero con el valor retornado por la función.
@@ -133,6 +163,10 @@ animales.forEach((animal) => {
 ```
 
 - Esta forma de detectar el tipo de dato entre la colección, la función y donde está siendo ejecutada se llama `tipado por contexto o contextual typing`.
+
+#### Practica
+
+- [Ejercicio 208](../ejercicios/consignas/ts/ej208.md)
 
 ### Enums
 

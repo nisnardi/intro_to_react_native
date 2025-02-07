@@ -232,3 +232,13 @@ mostrarLongitud("Vamos TypeScript!!");
 - Si estamos seguros que va a ser un string podríamos declararlo como tal pero en algunas oportunidades no podemos.
 - Es ahí donde entra la opción de decirle a TypeScript usa este dato como si fuera de tal tipo.
 - Acá usamos `data as string` para establecer que TS tiene que confiar que este dato es un `string` y que va a tener la propiedad `length`.
+- También podemos utilizar la forma `<tipo de dato>variable`.
+
+```typescript
+function mostrarLongitud(data: unknown) {
+  const longitud = (<string>data).length;
+  console.log("Longitud:", longitud);
+}
+
+mostrarLongitud("Vamos TypeScript!!");
+```

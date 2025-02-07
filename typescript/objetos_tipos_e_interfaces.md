@@ -246,3 +246,39 @@ const persona: Persona = {
 - La interface `SerVivo` ahora contiene las propiedades en común entre un `Animal` y una `Persona`.
 - Tanto la interfaz `Animal` como `Persona` pueden definir sus propias propiedades extendiendo las que obtiene de `SerVivo`.
 - TypeScript va a mostrar un error si al utilizar las interfaces falta alguna propiedad o está mal el nombre.
+- En las funciones podemos hacer `destructuring` de un objeto y utilizar TypeScript para decirle de que tipo de dato es.
+
+```typescript
+interface Persona {
+  nombre: string;
+  apellido: string;
+  edad: number;
+}
+
+function imprimirPersona({ nombre, apellido }: Persona) {
+  console.log(`La persona se llama ${nombre} ${apellido}`);
+}
+
+imprimirPersona({ nombre: "Nicolas", apellido: "Isnardi", edad: 45 });
+```
+
+- En este ejemplo vemos como imprimir persona utiliza `destructuring` para obtener el nombre y apellido de la Persona.
+- También podemos hacerlo de la siguiente manera:
+
+```typescript
+function imprimirPersona({
+  nombre,
+  apellido,
+}: {
+  nombre: string;
+  apellido: string;
+}) {
+  console.log(`La persona se llama ${nombre} ${apellido}`);
+}
+
+imprimirPersona({ nombre: "Nicolas", apellido: "Isnardi" });
+```
+
+- El primer valor es `{nombre,apellido}` es el destructuring del objeto que entra por parámetro.
+- El segundo valor luego de `:` es el tipo de dato `{nombre: string; apellido: string;}`.
+- No podemos hacer `{nombre: string, apellido string}` ya que eso sería en `destructuring` renombrar los nombres de los parámetros en lugar de definir el tipo de dato. Es por esto que TypeScript utiliza los `:` luego del objeto que va a ser desconstruido.

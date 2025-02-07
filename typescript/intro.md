@@ -3,7 +3,7 @@
 ## Intro
 
 - TypeScript es un lenguaje de programación fuertemente `tipado` que se `basa en JavaScript`.
-- Podemos pensarlo como un JavaScript con esteroides
+- Podemos pensarlo como un JavaScript con esteroides.
 - JavaScript no es un lenguaje que valide tipos de datos y esto nos permite tener errores inesperados como el siguiente ejemplo:
 
 ```javascript

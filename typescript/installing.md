@@ -9,7 +9,7 @@
 - Para hacerlo de manera global utilizamos `-g` luego del `install`.
 - Para instalar TypeScript tenemos que ejecutar: `npm install -g typescript`.
 - TypeScript utiliza archivos con la extensión `.ts` en lugar de `.js`.
-- Una vez instalado TypeScript deberíamos poder ejecutar el comando `tsc` desde la consola para compilar un archivo `.ts` a uno de `.js`
+- Una vez instalado TypeScript deberíamos poder ejecutar el comando `tsc` desde la consola para compilar un archivo `.ts` a uno de `.js`.
 
 ```bash
 tsc archivo.ts

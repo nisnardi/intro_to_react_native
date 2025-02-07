@@ -58,7 +58,7 @@
 - [Instalar y usar TS?](typescript/installing.md)
 - [Tipos de datos](typescript/tipos_mas_comunes.md)
 - [Objetos, Alias & Interfaces](typescript/objetos_tipos_e_interfaces.md)
-- [Comninando tipos](typescript/combinando_tipos.md)
+- [Combinando tipos](typescript/combinando_tipos.md)
 <!--
 [Intro a TypeScript](javascript/typescript.md)
 [Unitary Testing](javascript/unitarytests.md);
