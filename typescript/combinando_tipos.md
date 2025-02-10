@@ -101,6 +101,10 @@ console.log(valor2);
 - TypeScript no muestra ni tira ningún error en este caso ya que tanto la colección animales o un número tienen el método `toString`.
 - En este caso no hay validación ya que la función no va a tirar error.
 
+#### Practica
+
+- [Ejercicio 214](../ejercicios/consignas/ts/ej214.md)
+
 ### Tuple
 
 - JavaScript no tiene el tipo de dato `Tuple` que es un array con una cantidad de elementos determinados y con un tipo de dato definido para cada item.
@@ -138,6 +142,10 @@ const fila: [number, string] = [1, "Nicolas", "Juan"]; // Error
 ```
 
 - TS muestra el error `Source has 3 element(s) but target allows only 2.` para mostrarnos que tenemos un item de más.
+
+#### Practica
+
+- [Ejercicio 215](../ejercicios/consignas/ts/ej215.md)
 
 ### Valores literales
 
@@ -212,6 +220,10 @@ function compare(a: string, b: string): -1 | 0 | 1 {
 
 - La función `compare` devuelve los valores `-1, 0 o 1` a la hora de comparar valores mientra que los parámetros de entrada son un `string`.
 
+#### Practica
+
+- [Ejercicio 216](../ejercicios/consignas/ts/ej216.md)
+
 ### Type Assertions
 
 - `Type Assertions` es como decirle al compilador de TypeScript `Si no sabes que tipo de dato es.. confía en mi`.
@@ -242,3 +254,7 @@ function mostrarLongitud(data: unknown) {
 
 mostrarLongitud("Vamos TypeScript!!");
 ```
+
+#### Practica
+
+- [Ejercicio 217](../ejercicios/consignas/ts/ej217.md)
