@@ -135,6 +135,10 @@ saludar(persona);
 - Estamos seguros que el nombre llegó porque TypeScript nos da la tranquilidad que fué chequeado antes de transformar este código a JavaScript.
 - De esta forma podemos utilizar propiedades o métodos opcionales en TypeScript.
 
+#### Practica
+
+- [Ejercicio 210](../ejercicios/consignas/ts/ej210.md)
+
 ### Alias
 
 - Hasta ahora aprendimos como utilizar type annotation para definir los tipos de datos.
@@ -176,6 +180,10 @@ saludar(persona);
 - El `void` al final de la función es ya que la misma no retorna ningún tipo de dato. Podemos sacarlo y TypeScript lo va a inferir.
 - Cabe destacar que `type` es solo un `alias` y no permite ser utilizado para crear otros tipos de datos ya que es un `alias`.
 
+#### Practica
+
+- [Ejercicio 211](../ejercicios/consignas/ts/ej211.md)
+
 ### Interface
 
 - `interface` es otra forma de poder definir tipos.
@@ -211,6 +219,11 @@ const animal: Animal = {
 ```
 
 - TS va a mostrar un error si en lugar de utilizar `interface` utilizamos `type` ya que no se puede volver a "abrir" para declarar nuevas propiedades.
+
+#### Practica
+
+- [Ejercicio 212](../ejercicios/consignas/ts/ej212.md)
+
 - Dado esta definición de `Animal`, también podemos utilizar algo parecido para `Persona`.
 
 ```typescript
@@ -282,3 +295,7 @@ imprimirPersona({ nombre: "Nicolas", apellido: "Isnardi" });
 - El primer valor es `{nombre,apellido}` es el destructuring del objeto que entra por parámetro.
 - El segundo valor luego de `:` es el tipo de dato `{nombre: string; apellido: string;}`.
 - No podemos hacer `{nombre: string, apellido string}` ya que eso sería en `destructuring` renombrar los nombres de los parámetros en lugar de definir el tipo de dato. Es por esto que TypeScript utiliza los `:` luego del objeto que va a ser desconstruido.
+
+#### Practica
+
+- [Ejercicio 213](../ejercicios/consignas/ts/ej213.md)

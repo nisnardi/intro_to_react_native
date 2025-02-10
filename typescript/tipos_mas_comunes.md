@@ -299,6 +299,10 @@ enum TipoDeJugador {
 }
 ```
 
+#### Practica
+
+- [Ejercicio 209](../ejercicios/consignas/ts/ej209.md)
+
 ### null & undefined
 
 - Al igual que en JavaScript se puede utilizar `null o undefined`.
