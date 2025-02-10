@@ -59,8 +59,16 @@
 - [Tipos de datos](typescript/tipos_mas_comunes.md)
 - [Objetos, Alias & Interfaces](typescript/objetos_tipos_e_interfaces.md)
 - [Combinando tipos](typescript/combinando_tipos.md)
+
+## Testing
+
+- [Jest, Tests y más](jest/jest_tests_y_mas.md)
+- [Creando Tests](jest/creando_tests.md)
+- [Matchers](jest/matchers.md)
+- [Testing Asynchronous Code](jest/async.md)
+
 <!--
-[Intro a TypeScript](javascript/typescript.md)
+
 [Unitary Testing](javascript/unitarytests.md);
 -->
 
