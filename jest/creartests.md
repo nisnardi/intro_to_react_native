@@ -204,6 +204,10 @@ import { mostrarValores } from "../js/ej5test";
 const log = jest.spyOn(console, "log").mockImplementation(() => {});
 
 describe("Test Ej 5", () => {
+  afterEach(() => {
+    log.mockReset();
+  });
+
   test("se muestran los valores en pantalla", () => {
     mostrarValores();
 
@@ -224,6 +228,8 @@ describe("Test Ej 5", () => {
 - Cuando corremos este test `console.log` va a ser una función de `jest`.
 - Con este `mock` podemos preguntarle a `jest` si console.log fué llamado una cantidad de veces esperadas.
 - También si fué llamado pasandole los parámetros esperados.
+- Agregamos `afterEach` para que luego de cada test para que haga un reset o volver los valores iniciales de la función mockeada.
+- Hacer un reset es importante para asegurar que cada test se corre de manera aislada y no depende de cambios en otros tests.
 - Ahora que ya tenemos varios tests podemos correrlos todos juntos utilizando el siguiente comando `npm test .`
 - llamamos a `npm test` como siempre pero utilizamos el concepto de `.` para decirle que corra todos los tests que hay en esta carpeta.
 
