@@ -64,13 +64,10 @@
 
 - [Jest, Tests y más](jest/jest_tests_y_mas.md)
 - [Creando Tests](jest/creando_tests.md)
-- [Matchers](jest/matchers.md)
-- [Testing Asynchronous Code](jest/async.md)
-
-<!--
-
-[Unitary Testing](javascript/unitarytests.md);
--->
+- [Comparadores](jest/comparadores.md)
+- [Testeando código async](jest/async.md)
+- [Mocks](jest/mocks.md)
+- [Crear tus propios tests](jest/creartests.md)
 
 <!--
 Tutoriales de Expo
