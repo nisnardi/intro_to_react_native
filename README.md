@@ -69,8 +69,12 @@
 - [Mocks](jest/mocks.md)
 - [Crear tus propios tests](jest/creartests.md)
 
+## React Native
+
+- [Crear tu primer Proyecto con Expo](primerproyecto.md)
 <!--
 Tutoriales de Expo
+
 
 - Expo tutorial
 - EAS tutorial
@@ -80,10 +84,10 @@ Tutoriales de Expo
 - Local DB
 - Testing
 - Estado con Redux / Zustand
-https://dev.to/b42/test-your-react-native-app-with-maestro-5bfj
-
+  https://dev.to/b42/test-your-react-native-app-with-maestro-5bfj
 
 -->
+
 <!--
 - [Date](date.md)
 - [Symbol](symbol.md)
