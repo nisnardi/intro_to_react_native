@@ -72,6 +72,8 @@
 ## React Native
 
 - [Crear tu primer Proyecto con Expo](primerproyecto.md)
+- [Aprendiendo React](aprendiendoreact.md)
+
 <!--
 Tutoriales de Expo
 
