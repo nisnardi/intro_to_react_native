@@ -918,4 +918,268 @@ export default function Index() {
 - Entendiendo JavaScript podemos entender que es lo que está haciendo este código.
 - JSX nos puede confundir pero siempre hay que recordar que es lo que se está ejecutando cuando corre el código para darle sentido a lo que estamos haciendo.
 
-###
+### Listas?
+
+- En muchos casos nuestros componentes van a tener que mostrar datos en forma de Lista.
+- React Native tiene un par de componentes básicos que son Listas y que se pueden utilizar de diferente maneras pero las vamos a ver un poco más adelante cuando aprendamos sobre los componentes básicos de React Native.
+- Por ahora la idea es seguir usando JavaScript y lo que sabemos para manipular colecciones y poder simular como una lista.
+- Lo aprendido en este módulo va a ser útila a la hora de mostrar datos en las listas de React Native, usar un filtro u ordernar una colección.
+- En varias oportunidades vamos a tener que mostrar datos utilizando el mismo componente.
+- Dado los datos por ahí podemos utilizar alguna propiedad u otra del componente pero en general vamos a utilizar un componente para mostrar los valores de la colección.
+- JavaScript como sabemos tiene las funiones `map, filter, forEach, sort` que nos permiten iterar una colección.
+- Por cada valor de la colección se llama un callback donde el parámetro es el valor de la colección actual.
+
+```javascript
+export default function Index() {
+  const animales = ["Perro", "Gato", "Loro"];
+  const componentes = animales.map((animal) => <Text>{animal}</Text>);
+
+  return (
+    <View>
+      <ContenedorDeMensaje>{componentes}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- En este ejemplo tenemos una colección animales (volvió!!!).
+- Si queremos mostrar los nombres de los animales que están en la colección podemos recorrer la lista y crear un componente por cada uno de ellos y guardarlo en la variable `componentes`.
+- Vale recordar que `map` retorna un nuevo array con los valores alterados de la forma que nosotros queremos.
+- Dentro del callback de `map` nosotros creamos un compnente `<Text>` y le asignamos el texto del animal.
+- Dado que componentes termina siendo un Array de componentes lo podemos pasar como hijos del componente `<ContenedorDeMensaje>`.
+- Podemos pensar como si esto fuera:
+
+```javascript
+export default function Index() {
+  const animales = ["Perro", "Gato", "Loro"];
+
+  const componentes = [
+    <Text>{animales[0]}</Text>,
+    <Text>{animales[1]}</Text>,
+    <Text>{animales[2]}</Text>,
+  ];
+
+  return (
+    <View>
+      <ContenedorDeMensaje>{componentes}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Ojalá que esta forma ayude a entender que es lo que hicimos usando `map` antes.
+- Está claro que usando `map` esto se transforma de forma más dinámica y podemos mostrar todos los elementos que tenga la colección.
+- En este ejemplo estamos forzando que sean sólo 3 elementos y en el orden que nosotros queremos por hacer la asignación de manera estática y no dinámica.
+- Es posible que VS Code les esté mostrando un error relacionado a una `key` que no está por ningún lado.
+- Al trabajar con colecciones React necesita una forma única de identificar un componente.
+- Si algo cambia y React tiene el valor único entonces puede saber qué tiene que cambiar.
+- Es por esto que React pide el concepto de una `key` que sea un valor único dentro de esa colección para poder llevar track de los cambios y así poder identintificarlos.
+- En este caso podríamos utilizar el valor de la colección como key.
+
+```javascript
+export default function Index() {
+  const animales = ["Perro", "Gato", "Loro"];
+  const componentes = animales.map((animal) => (
+    <Text key={animal}>{animal}</Text>
+  ));
+
+  return (
+    <View>
+      <ContenedorDeMensaje>{componentes}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- También podríamos utilizar el `index` que nos da `map` como parámetro del callback.
+- Puede no ser la mejor opción pero es mejor que nada.
+
+```javascript
+export default function Index() {
+  const animales = ["Perro", "Gato", "Loro"];
+  const componentes = animales.map((animal, index) => (
+    <Text key={index}>{animal}</Text>
+  ));
+
+  return (
+    <View>
+      <ContenedorDeMensaje>{componentes}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Muchas veces vamos a trabajar con alguna colección de objetos donde tengan la propiedad ID y podemos utilzar ese valor como key ya que en nuestro sistema es un valor único.
+- Dado que ahora la colección animales tiene objetos como items, tenemos que actualizar el resto del código para obtener los valores de otra forma.
+
+```javascript
+export default function Index() {
+  const animales = [
+    { id: 1, nombre: "Perro" },
+    { id: 2, nombre: "Gato" },
+    { id: 3, nombre: "Loro" },
+  ];
+  const componentes = animales.map((animal) => (
+    <Text key={animal.id}>{animal.nombre}</Text>
+  ));
+
+  return (
+    <View>
+      <ContenedorDeMensaje>{componentes}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Otra opción puede ser utilizar algún módulo que nos de valores únicos como puede ser [uuid](https://github.com/uuidjs/uuid)
+- La propiedad `key` es sólo utilizada por React para manejo interno.
+- Si necesitamos que un `id` llegue como valor al componente, debemos utilizar otra propiedad que no sea `key`.
+- Dos conceptos importantes es que las `key` tienen que ser únicas por colección y también no deben cambiar.
+- Siguiendo este concepto también podríamos utilizar `filter` para filtrar una colección.
+
+```javascript
+export default function Index() {
+  const animales = [
+    { id: 1, nombre: "Perro", muerde: false },
+    { id: 2, nombre: "Gato", muerde: false },
+    { id: 3, nombre: "Loro", muerde: true },
+  ];
+
+  const animalesQueNoMuerden = animales.filter((animal) => !animal.muerde);
+
+  const componentes = animalesQueNoMuerden.map((animal, index) => (
+    <Text key={animal.id}>{animal.nombre}</Text>
+  ));
+
+  return (
+    <View>
+      <ContenedorDeMensaje>{componentes}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Ahora sólo mostramos los animales que no muerden y el Loro se quedó afuera de nuestra app solamente por portarse mal.
+
+### Componentes puros
+
+- En programación funcional se conoce como función pura a aquella función que dado el ingreso de algún parámetro siempre devuelve lo mismo.
+
+```javascript
+function sumar(numero1, numero2) {
+  return numero1 + numero2;
+}
+
+sumar(2, 2);
+```
+
+- En este caso la función `sumar` es pura ya que si la llamamos con los valores `2, 2` siempre va a retornar 4.
+- No existe ningúna otra forma de que esta función al pasar 2, 2 no devuelva 4.
+- Alguien puede decir.. le paso un string.. y ahí es diferente porque ya no son el mismo valor aún si lo "parecen".
+- Podemos ver de esta forma que llamar a esta función no tiene ningún efecto colateral.
+- React fué creado pensando de esta forma donde cada componente que escribimos es una función pura.
+- Es decir que React espera que si creamos un componente con unas propiedades definidas, el retorno de esa función / componente sea siempre la misma.
+- En el caso del componente `<Mensaje mensaje="algo" />` siempre va a retornar el `<Text>{mensaje}` como tenemos definido.
+- No hay alteración de la respuesta y si la propiedad mensaje tiene el valor `algo` la respuesta siempre es la misma.
+- React compara esto a estar cocinando con una receta. Mientras sigas al pie de la letra.. deberías obtener el mismo resultado siempre.
+
+#### Efectos colaterales:
+
+- Una función que no es pura es considerada `impura`.. Ahí te veo Harry Potter function.
+
+```javascript
+export default function Index() {
+  let contador = 0;
+
+  function Contador() {
+    contador += 1;
+    return <Text>{contador}</Text>;
+  }
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador />
+        <Contador />
+        <Contador />
+        <Contador />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- En este ejemplo el componente `Contador` es considerado impuro.
+- Está usando valores que están fuera de su scope (global) y no sabemos nunca al llamarlo que valor va a renderizar.
+- Esto se arregla fácilmente pasando el valor como propiedad y retornando el mensaje esperado.
+
+```javascript
+export default function Index() {
+  function Contador({ contador }: { contador: number }) {
+    return <Text>{contador}</Text>;
+  }
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador contador={1} />
+        <Contador contador={2} />
+        <Contador contador={3} />
+        <Contador contador={4} />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- De esta forma es fácil saber que va a retornar el componente en cada momento.
+- Si necesito usar el concepto de contador lo puedo hacer por fuera del componente.
+- Una parte del código se ocupa del contador en si pero el componente sólo renderiza lo que se le pasó por propiedades.
+- Al llamar 2 veces al mismo componente con los mismos valores de propiedades debemos obtener el mismo resultado.
+- El mayor problema que tiene el ejemplo del contador donde la función es `impura` es que accede al ámbito global y genera un dependencia más un efecto colateral si usamos contador que cambió de valor cuando se llamó al componente.
+- Las funciones puras pueden utilizar variables internas, hacer cálculos y todo lo que necesiten siempre y cuando sigan la regla de que si entra un mismo valor, obtenemos la misma respuesta.
+
+#### Cómo manejar efectos secundarios o side effects:
+
+- React maneja los efectos secundarios de diferentes manera.
+- Una puede ser por medio de eventos. Cuando pasa algún evento entonces se ejecuta alguna mutación o cambio.
+- La otra opción es utilizar algo llamado `useEffect` que nos especifíca que algo va a cambiar en la función y que es un efecto secundario.
+- Especificando eventos y el uso de `useEffect` es que podemos entender de manera fácil porque algún valor cambia.
+- De no mantener las funciones puras y trabajar con funciones impuras podemos terminar pasandola mal a la hora de entender porque un valor cambió en algún momento.
+- Dada la naturaleza de como funciona React para renderizar componentes necesitamos que cada función sea pura y se pueda renderizar a si misma sin depender de otro scope o componente.
+- También las funciones puras ayudan a React a hacer optimizaciones a la hora de renderizar componentes en pantalla.
+- Vamos a aprender más de manejo de eventos y `useEffect` en otra sección.
+
+### Entendiendo el árbold de componentes de React.
+
+![Arbol de componentes de React](../assets/react-native/arbol_react.png)
+
+- En el último código que ejecutamos tenemos la siguiente estructura:
+
+```javascript
+<Index>
+  <View>
+    <Contador>
+      <Text />
+    </Contador>
+  </View>
+<Index>
+```
+
+- Index termina siendo un componente que funciona como raíz de nuestro proyecto.
+- Después tenemos un componente `<View>` que contiene al `<Contador>`.
+- `<Contador>` devuelve un componente `<Text>`.
+- React arma un árbol de dependencia / relación entre los componentes.
+- En la imágen podemos ver cómo React arma esta dependencia usando las herramientas de debug.
+
+![Propiedades de componentes de React](../assets/react-native/propiedades_de_los_componentes.png)
+
+- En esta imágen vemos las propiedades que tiene el componente `<Text>`.
+- Es un objeto que tiene la propiedad `children` y como valor tiene `1`.
+- `rendered by` muestra la cadena de renderizado hasta llegar a este componente.
+- Vemos que va desde `App => Route => Index => Contador`.
+
+![Arbol](../assets/react-native/arbol_react_doc.png)
+
+- La representación de árboles de compponentes es el resultado final de un render de React.
+- Si el código tiene condicionales entonces el árbol puede cambiar en otra pasada o render.
