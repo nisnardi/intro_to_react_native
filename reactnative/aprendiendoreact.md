@@ -313,3 +313,609 @@ export default function Index() {
 - En este ejemplo vemos como al no pasar la propiedad `mostrarNumero` se utiliza el valor por defecto.
 - Para los propiedades boolean podemos utilizar el nombre de la propiedad sólo y eso le pasa `true` al componente.
 - También podemos pasar un valor `false o true` entre `{true}` or `{false}`.
+
+### Reglas de JSX
+
+- JSX es de gran ayuda pero tiene algunas reglas que debemos seguir para que no nos tire errores:
+
+#### 1) Regresar un sólo elemento
+
+- Los componentes sólo pueden retornar un elemento.
+- Si queremos retornar más de un componente debemos rodearlo de otro componente padre.
+
+```javascript
+export default function Index() {
+  return (
+    // JSX Error: No se puede retornar múltiples componentes
+    <Mensaje mensaje="Bienvenidos" numero={10} />
+    <Mensaje mensaje="a" mostrarNumero />
+    <Mensaje mensaje="React Native" mostrarNumero={false} />
+  );
+}
+
+
+export default function Index() {
+  return (
+    // JSX válido
+    <View>
+      <Mensaje mensaje="Bienvenidos" numero={10} />
+      <Mensaje mensaje="a" mostrarNumero />
+      <Mensaje mensaje="React Native" mostrarNumero={false} />
+    </View>
+  );
+}
+```
+
+- Hay un dicho viejo que dice.. `Hecha la ley, hecha la trampa` y escribiendo esto me acordé mucho de mi papá <3
+- En el ejemplo válido vemos que retornamos un `<View>` como único componente que tiene otros componentes hijos.
+- Si bien esto funciona, en algunos casos no vamos a querer utilizar un componente real porque agrega más elementos en nuestro arbol cuando no lo necesitamos.
+- Existe un componente `<> </>` que nos permite rodear los componentes que queremos retornar sin tener que agregar un componente real.
+- `<> </>` no crea un componente nuevo y de esta forma podemos retornar más componentes sin que JSX se queje sobre este tema.
+- Este componente en React se llama [Fragment](https://react.dev/reference/react/Fragment).
+
+```javascript
+export default function Index() {
+  return (
+    <>
+      <Mensaje mensaje="Bienvenidos" numero={10} />
+      <Mensaje mensaje="a" mostrarNumero />
+      <Mensaje mensaje="React Native" mostrarNumero={false} />
+    </>
+  );
+}
+```
+
+- `Fragment` para React es un componente por más que no agregue nada al árbol de componentes.
+- Podemos utilizar `<></>` o `<Fragment></Fragment>` y obtenemos el mismo resultado.
+- La opción de `<Fragment></Fragment>` nos permite asignar propiedades al componente en caso de ser necesario.
+
+```javascript
+export default function Index() {
+  return (
+    <Fragment>
+      <Mensaje mensaje="Bienvenidos" numero={10} />
+      <Mensaje mensaje="a" mostrarNumero />
+      <Mensaje mensaje="React Native" mostrarNumero={false} />
+    </Fragment>
+  );
+}
+```
+
+- JSX tiene este problema ya que en el fondo utiliza funciones de `JavaScript` y como sabemos las funciones sólo pueden devolver un valor. Ahí cobra sentido esto.
+
+#### 2) Cerrar todos los tags
+
+- JSX necesita saber dónde inicial y termina la definición de un componente o tag.
+- Para solucionar este problema podemos utilizar `<Component></Componente>` o `<Componente />` dependiendo el caso.
+- Es importante para que JSX entienda nuestro código tener siempre `/` en algún lado del uso del componente.
+
+```javascript
+export default function Index() {
+  return (
+    <>
+      <MiComponente />
+      <Mensaje mensaje="Bienvenidos" numero={10} />
+
+      <MiComponente>
+        <Mensaje mensaje="Bienvenidos" numero={10} />
+      </MiComponente>
+    </>
+  );
+}
+```
+
+#### 3) Utilizar camelCase para definir las propiedades
+
+- React nos permite asignar estilos a nuestros componentes para especificar cómo queremos que se vean (y los vamos a hacer bien lindos)
+- Las propiedades de CSS por ejemplo pueden ser `background-color` utilizado en un contexto WEB.
+- Dado que JSX es JavaScript en el fondo, no podemos utilizar `background-color` como propiedad de nuestro objeto `{background-color: 'grey'}`.
+- En este caso podemos utilizar camelCase para definir las propiedades de nuestros componentes, por ejemplo `background-color` se transforma en ``backgroundColor` donde la `C` va a estar en mayúscula.
+- Usando camelCase, JSX puede utilizar esta propiedad en JavaScript `{backgroundColor: 'grey'}`.
+
+```javascript
+function Mensaje({ mensaje }) {
+  return (
+    <View style={{ backgroundColor: "grey" }}>
+      <Text style={{ fontWeight: "bold" }}>{mensaje}</Text>
+    </View>
+  );
+}
+
+export default function Index() {
+  return (
+    <View>
+      <Mensaje mensaje="Bienvenidos" />
+      <Mensaje mensaje="a" />
+      <Mensaje mensaje="React Native" />
+    </View>
+  );
+}
+```
+
+- Siguiendo estas reglas podemos utilizar JSX en nuestros proyectos y obtener todo su beneficio.
+
+### Utilizar {} (llaves) en JSX
+
+- Como ya vimos podemos utilizar `{}` en nuestos components ya sea para pasar valores de propiedades o algún contenido de JavaScript en nuestros componentes.
+
+```javascript
+function Mensaje({ mensaje }) {
+  return (
+    <View style={{ backgroundColor: "grey" }}>
+      <Text style={{ fontWeight: "bold" }}>{mensaje}</Text>
+    </View>
+  );
+}
+```
+
+- En este ejemplo tenemos dos casos diferentes:
+- Usamos `{}` para las propiedades: `style={{ backgroundColor: "grey" }}`. Asignamos un objeto de JavaScript.
+- También usamos `{}` como contenido de nuestro componente: `<Text>{mensaje}</Text>`. Acá estamos pasando una variable de JavaScript como contenido de nuestro componente y nos permite tener contenido dinámico.
+
+```javascript
+function Mensaje({ mensaje }) {
+  const containerStyle = { backgroundColor: "grey" };
+  const textStyle = { fontWeight: "bold" };
+
+  return (
+    <View style={containerStyle}>
+      <Text style={textStyle}>{mensaje}</Text>
+    </View>
+  );
+}
+```
+
+- También podríamos definir este componente de esta forma donde utilizamos variables para asignar objetos de JavaScript y luego usarlas como propiedades del componente.
+- Por ahí escribir código de esta manera hace que la definición del componente sea más fácil de leer pero también es gusto personal.
+- Dado que `{}` es como si le dijeramos a JSX `"Acá vas a ejecutar código JavaScript"` podemos hacer algo como:
+
+```javascript
+function Mensaje({ mensaje }) {
+  return (
+    <View>
+      <Text>{mensaje.toUpperCase()}</Text>
+      <Text>El resultado de 2 + 2 es: {2 + 2}</Text>
+    </View>
+  );
+}
+```
+
+- Ahora nuestro componente `Mensaje` muestra la `propiedad mensaje` pasada como parámetro en mayúscula.
+- También dado que `<Text>` puede mostrar un texto podemos combinar texto y código de JavaScript utilizando `{ codigo JavaScript}`.
+
+### Pasando propiedades
+
+- Ya vimos como pasar una propiedad o varias a un Componente.
+- Sabemos que los componentes son una función de JavaScript.
+- Como parámetro React le pasa a las funciones como parámetro un objeto de JavaScript que tiene `propiedad: valor` donde cada propiedad es el nombre del parámetro y el valor es el valor de la propiedad.
+- Podemos decir que la propiedad del objeto es la propiedad del componente.
+- También sabemos que podemos utilizar lo aprendido sobre Funciones como pasar valores por defecto `parametro=valor` y de esta forma si el componente no recibe ninguna propiedad utiliza los valores por defecto.
+- Siguiendo con lo aprendido en funciones sabemos que podemos utilizar destructuring `{ propiedad }` en la definición de los parámetros como también asignar una variable `props` y de esta forma uso el objeto dentro del componente `props.propiedad`.
+- Vamos viendo que sabemos un montón a esta altura pero todavía nos quedan ver algunos casos más.
+
+```javascript
+function Mensaje({ mensaje = "", numero = 0, mostrarNumero = false }) {
+  return (
+    <View>
+      <Text>{mensaje}</Text>
+      <Text>{numero}</Text>
+      <Text>{mostrarNumero}</Text>
+    </View>
+  );
+}
+```
+
+- En algunos casos podemos utilizar el concepto de `spread` para pasar múltiples propiedades de una vez a un componente
+
+```javascript
+export default function Index() {
+  const propiedades = {
+    mensaje: "Bienvenidos a React Native",
+    numero: 20,
+    mostrarNumero: true,
+  };
+
+  return (
+    <View>
+      <Mensaje {...propiedades} />
+    </View>
+  );
+}
+```
+
+- Combinado lo aprendido podemos utilizar `{}` para decirle a JSX que vamos a utilizar código JavaScript en este lugar.
+- `{...propiedades}` como ya sabemos los `...` son el operador `spread` y lo que hace es tomar las propiedades del objeto `propiedades`.
+- También lo podemos hacer de la manera tradicional:
+
+```javascript
+export default function Index() {
+  const propiedades = {
+    mensaje: "Bienvenidos a React Native",
+    numero: 20,
+    mostrarNumero: true,
+  };
+
+  return (
+    <View>
+      <Mensaje
+        mensaje={propiedades.mensaje}
+        numero={propiedades.numero}
+        mostrarNumero={propiedades.mostrarNumero}
+      />
+    </View>
+  );
+}
+```
+
+- Los dos ejemplos hacen exactamente lo mismo (como resultado final) pero usar el operador `...` nos ayuda a escribir menos código y hacer más fácil agregar o cambiar las propiedades.
+
+```javascript
+function Mensaje({
+  mensaje = "",
+  numero = 0,
+  mostrarNumero = false,
+  nuevaPropiedad,
+}) {
+  return (
+    <View>
+      <Text>{mensaje}</Text>
+      <Text>{numero}</Text>
+      <Text>{mostrarNumero}</Text>
+      <Text>{nuevaPropiedad}</Text>
+    </View>
+  );
+}
+
+export default function Index() {
+  const propiedades = {
+    mensaje: "Bienvenidos a React Native",
+    numero: 20,
+    mostrarNumero: false,
+    nuevaPropiedad: true,
+  };
+
+  return (
+    <View>
+      <Mensaje {...propiedades} />
+    </View>
+  );
+}
+```
+
+- También como vimos podemos utilizar JSX para pasar componente a otros componentes creando un realción de Padre e Hijo.
+
+```javascript
+<ComponentePadre>
+  <ComponenteHijo />
+  <ComponenteHijo />
+  <ComponenteHijo />
+</ComponentePadre>
+```
+
+- Seguimos con nuestro ejemplo del componente `Mensaje` que al ser bien simple nos permite aprender todos estos conceptos.
+- Podemos hacer un nuevo componente que sea un contenedor de Mensaje.
+
+```javascript
+function ContenedorDeMensaje({ children }: { children: React.ReactNode }) {
+  return (
+    <View style={{ padding: 10, borderWidth: 3, borderColor: "black" }}>
+      {children}
+    </View>
+  );
+}
+
+export default function Index() {
+  const propiedades = {
+    mensaje: "Bienvenidos a React Native",
+    numero: 20,
+    mostrarNumero: true,
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje {...propiedades} />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- En este ejemplo vemos que el componente `ContenedorDeMensaje` acepta como propiedad algo llamado `children` pero a la hora de utilizarlo no le pasamos ninguna propiedad `<ContenedorDeMensaje>` y funciona.
+- En algun momento mencionamos que `<ContenedorDeMensaje> Acá van los children </ContenedorDeMensaje>` que entre etiqueta de apertura y cierre de un componente podemos definir los componentes hijos.
+- `<Text>Hola</Text>` en el caso de Text por ejemplo JSX pasa un string con el valor `Hola` como hijo.
+- Podemos pasar diferentes tipos de valores como hijos de un componente y como también funciones que al final terminan siendo componentes.
+- Este concepto hace a React super poderoso ya que podemos crear nuevos componentes combiando otros.
+
+```javascript
+function ContenedorDeMensaje({ children }: { children: React.ReactNode }) {
+  return (
+    <View style={{ padding: 10, borderWidth: 3, borderColor: "black" }}>
+      {children}
+    </View>
+  );
+}
+
+export default function Index() {
+  const propiedades = {
+    mensaje: "Bienvenidos a React Native",
+    numero: 20,
+    mostrarNumero: true,
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje {...propiedades} />
+      </ContenedorDeMensaje>
+      <ContenedorDeMensaje>
+        <Text>
+          Hola, otro componente con borde y sin tener que hacer mucho!!
+        </Text>
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- En a documentación de React sugieren ver a la propiedad `children` como un agujero que se puede llenar con algo que le pasen ahí.
+- Las propiedades de un componente son dynámicas y no estáticas. Esto significa que con el correr del tiempo de la ejecución de la aplicación las propiedades pueden tener el mismo valor siempre `(estáticas)` o puede cambiar `(dinámicas)`.
+- Imaginemos un componente `Lista` que muestra una colección de Animales para seguir con el mismo tema.
+- La lista inicial puede estar vacía, luego podemos crear de alguna forma un Animal y asignarlo.
+- Al cambiar el valor de la propiedad, React re-renderiza los componentes para mostrar el nuevo estado.
+
+```javascript
+import React, { useState } from "react";
+import { Button, View } from "react-native";
+import { Mensaje } from "@/components/Message";
+
+function ContenedorDeMensaje({ children }: { children: React.ReactNode }) {
+  return (
+    <View style={{ padding: 10, borderWidth: 3, borderColor: "black" }}>
+      {children}
+    </View>
+  );
+}
+
+export default function Index() {
+  const [valor, setValor] = useState("");
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje mensaje={valor} numero={20} />
+      </ContenedorDeMensaje>
+      <Button
+        title="Mostrar nuevo valor"
+        onPress={() => {
+          setValor("Cada día queremos más a React Native");
+        }}
+      />
+    </View>
+  );
+}
+```
+
+- Este ejemplo agrega algunas cosas como `useState` y manejo de eventos como `onPress` pero vamos a aprender más sobre estos conceptos más adelante.
+- Por ahora pensemos en lo que hace:
+  - Inicialmente la propiedad valor está vacia.
+  - Al presionar el botón que dice "Mostrar nuevo valor" se cambia el valor de la propiedad mensaje.
+  - React detecta el cambio y re-renderiza el componente.
+  - Ahora en esta nueva versión la propiedad `valor` ya no contiene `""` sino el valor "Cada día queremos más a React Native"
+  - Esto demuestra que una `propiedad puede ser dinámica` y cambiar su valor en algún momento.
+  - La propiedad numero tiene como valor 20 y ese valor `no va a cambiar por lo cual es un valor estático`.
+- Las propiedades de un componente deberían ser inmutables, es decir que el componente no puede modificar esos valores.
+- Para cambiar las propiedades de un componente, va a ser el componente padre quién las cambie.
+- Dependiendo de lo que necesitemos hacer vamos a utilizar propiedades estáticas o dinámicas.
+
+### Condicionales en JSX
+
+- Sabemos que JavaScript tiene `if` statements o `if ternario` que nos permiten definir si ejecutamos un código u otro.
+- Si la condición del `if` es verdadera (true) entonces entra en el cuerpo principal.
+- En caso que la condición no sea verdadera podemos no ejecutar el cuerpo del `if` y también manejar esa opción con un `else` pero es opcional.
+- En JSX también podemos necesitar renderizar o no un componente dependiendo alguna condición.
+
+```javascript
+export function Mensaje({ mensaje = "", numero = 10, color = "" }) {
+  if (color === "rojo") {
+    return (
+      <View>
+        <Text style={{ color: "red" }}>{mensaje}</Text>
+        <Text style={{ color: "red" }}>{numero}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <Text>{mensaje}</Text>
+      <Text>{numero}</Text>
+    </View>
+  );
+}
+```
+
+- En este ejemplo agregamos una propiedad color.
+- Luego en el cuerpo del componente validamos si el valor pasado en la propiedad color es rojo, entonces devolvemos un componente con el texto en rojo.
+
+```javascript
+export default function Index() {
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje mensaje="React Native <3" numero={20} color="rojo" />
+        <Mensaje mensaje="React Native" numero={20} />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Usamos el componente de diferentes maneras.
+- En un caso le pasamos la propiedad color con el valor rojo y el componente se renderiza con texto en rojo.
+- En otro csao usamos el componente sin la propiedad color. Al estar definido como un string vacío la condición `if(color==='rojo')` es falsa entonces devuelve el otro bloque de código que no tiene el estilo rojo.
+- Otro patrón puede ser utilizar `null` como valor de retorno cuando no queremos renderizar algo en caso de que no se cumpla alguna condición.
+
+```javascript
+export function Mensaje({
+  mensaje = "Mensaje default",
+  numero = 10,
+  color = "",
+}) {
+  if (mensaje === "") {
+    return null;
+  }
+
+  if (color === "rojo") {
+    return (
+      <View>
+        <Text style={{ color: "red" }}>{mensaje}</Text>
+        <Text style={{ color: "red" }}>{numero}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <Text>{mensaje}</Text>
+      <Text>{numero}</Text>
+    </View>
+  );
+}
+```
+
+- Al llamar a este componente `<Mensaje />` sin pasar la propiedad `mensaje`, React detecta que devolvió `null` y no renderiza nada.
+- Este caso es útil a la hora de validar algunas propiedades necesarias para renderizar el componente.
+- En JSX también podemos utilizar el opeardor ternario para hacer alguna operación
+
+```javascript
+export function Mensaje({ mensaje }: { mensaje: string }) {
+  return (
+    <View>
+      <Text>{mensaje === "React Native" ? mensaje + "<3" : mensaje}</Text>
+    </View>
+  );
+}
+
+export default function Index() {
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje mensaje="React Native" />
+        <Mensaje mensaje="Otro mensaje" />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Usando el operador ternario `(condicion) ? verdadero : falso;` podemos validar si la propiedad `mensaje` tiene el valor `React Native` para agregar un `<3` antes de mostrar el mensaje en pantalla.
+- Si la condición no se da porque el texto no es el esperado entonces sólo mostramos el mensaje original que fue pasado como propiedad.
+- También podemos utilizar el operador ternario para renderizar diferentes componentes según una condición:
+
+```javascript
+export function Mensaje({ mensaje }: { mensaje: string }) {
+  return (
+    <View>
+      {mensaje === "React Native" ? (
+        <Text style={{ color: "red" }}>{mensaje + "<3"}</Text>
+      ) : (
+        <Text>{mensaje}</Text>
+      )}
+    </View>
+  );
+}
+
+export default function Index() {
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje mensaje="React Native" />
+        <Mensaje mensaje="Otro mensaje" />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- `mensaje === "React Native"` es la condición
+- `?` valida que la condición es `true` y devolvemos el componente `<Text style={{ color: "red" }}>{mensaje + "<3"}</Text>`.
+- `:` valida la condición cuando es `false` y devuelve el componente `<Text>{mensaje}</Text>`.
+- Los `()` se utilizan para agregar una especie de contexto de lo que se está renderizando.
+
+### Usando el operador && (and)
+
+- En muchos casos vamos a tener que validar si un valor es verdadero o falso y renderizar un componente según la condición.
+- Es común tener que cargar algo en una aplicación y para eso mostramos un componente de carga o los datos.
+
+```javascript
+export function Mensaje({ mensaje, loading = false }) {
+  return (
+    <View>
+      {loading && <Text>Cargando..</Text>}
+      {!loading && <Text>{mensaje}</Text>}
+    </View>
+  );
+}
+
+export default function Index() {
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Mensaje mensaje="React Native" loading />
+        <Mensaje mensaje="Otro mensaje" />
+      </ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- En este ejemplo vemos como podemos utilizar una condición y el operador &&.
+- Dado que la variable `loading` puede ser true or false lo utilizamos para validar el estado.
+- Ahora bien, el componente `<Text>Cargando..</Text>` es una función por lo cual en JavaScript se convierte en un valor Truthy.
+- Si la variable loading es true entonces se muestra el componente con el text cargando.
+- Si la variable es false entonces `!loading` se transforma en true y también renderiza el componete con el mensaje.
+- En este caso podríamos utilizar un if statement, un if ternario pero también podemos utilizar este concepto de `si esta variable es verdadera y hay algo para renderizar como un componente` utiliando &&.
+- Esta técnica funciona bien principalmente con valores boolean. Con otros tipos de valores puede dar algún error o dolor de cabeza.
+
+### Utilizar variables como componentes
+
+- Dado que todo lo de React es JavaScript basicamente podemos utilizar variables para asignar componentes.
+
+```javascript
+const texto = <Text>Texto en una variable</Text>;
+
+export default function Index() {
+  return (
+    <View>
+      <ContenedorDeMensaje>{texto}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- En este caso asignamos un componente a una variable y luego lo pasamos como hijo del componente ContendorDeMensaje.
+- También podemos validar alguna condición y luego asignar un valor u otro dependiendo el caso.
+
+```javascript
+const valorAValidar = true;
+const texto = valorAValidar ? (
+  <Text>El valor es true</Text>
+) : (
+  <Text>El valor es false</Text>
+);
+
+export default function Index() {
+  return (
+    <View>
+      <ContenedorDeMensaje>{texto}</ContenedorDeMensaje>
+    </View>
+  );
+}
+```
+
+- Podemos cambiar el valor de la variable `valorAValidar` para ver como cambia el componente que es asignado a la variable texto.
+- Entendiendo JavaScript podemos entender que es lo que está haciendo este código.
+- JSX nos puede confundir pero siempre hay que recordar que es lo que se está ejecutando cuando corre el código para darle sentido a lo que estamos haciendo.
+
+###
