@@ -1148,6 +1148,7 @@ export default function Index() {
 - De no mantener las funciones puras y trabajar con funciones impuras podemos terminar pasandola mal a la hora de entender porque un valor cambió en algún momento.
 - Dada la naturaleza de como funciona React para renderizar componentes necesitamos que cada función sea pura y se pueda renderizar a si misma sin depender de otro scope o componente.
 - También las funciones puras ayudan a React a hacer optimizaciones a la hora de renderizar componentes en pantalla.
+- React native al ser nativo renderiza el componente Button según el sistema operativo. Se puede ver diferente entre Android y iOS por ejemplo.
 - Vamos a aprender más de manejo de eventos y `useEffect` en otra sección.
 
 ### Entendiendo el árbold de componentes de React.
@@ -1183,3 +1184,98 @@ export default function Index() {
 
 - La representación de árboles de compponentes es el resultado final de un render de React.
 - Si el código tiene condicionales entonces el árbol puede cambiar en otra pasada o render.
+
+### Respondiendo a eventos
+
+- En React los datos que cambian a lo largo del tiempo se llaman estado (state).
+- En muchos casos como vimos la idea es modificar el estado por medio de eventos y no por los componentes mismos.
+- Existen componentes que no tienen / necesitan estado y otros que si.
+- La idea es crear componentes y si necesitan estado poder actualizarlo / cambiarlo cuando es necesario.
+- Con el cambio de estado el componente puede renderizar diferentes cosas.
+- React Native tiene un componente básico llamado `<Button>` que nos permite manejar el evento cuando el usuario apreta el botón.
+- React nos permite utilizar manejadores de eventos o event handlers para manejar los eventos que se disparan cuando pasa algo específico.
+- Los event handlers nos permiten pasar una función o callback que podemos utilizar para saber que se disparó un evento espécifico.
+- Decimos eventos específico porque dependiendo del componente podemos controlar cosas como apretar un botón, apretar durante más tiempo, cambio de valor de un campo de texto y muchos más.
+- El componente `<Button>` tiene una propiedad llamada `onPress` que acepta como valor una función, es decir un callback.
+- También tiene otra propiedad `title` que nos permite pasarle un string como valor para mostrar un texto en el cuerpo del botón.
+- Por ejemplo podemos utilizar un botón de la siguiente manera:
+
+```javascript
+<Button title="Apretame" onPress={() => {}} />
+```
+
+- También podemos utilizar una función definida fuera del componente
+
+```javascript
+const handlePress = () => {};
+
+<Button title="Apretame" onPress={handlePress} />;
+```
+
+- Cuando definimos un event handler de esta manera, React va a llamar al callback pasado como propiedad.
+- En este caso podemos leer esto como que `cuando el usuario presione el botón "Apretame" se ejecuta el código en la función handlePress`.
+- En estos ejemplos el `handlePress` no está haciendo nada.
+- `handlePress` es un event handler.
+
+```javascript
+export default function Index() {
+  function Contador({ contador }: { contador: number }) {
+    return <Text>{contador}</Text>;
+  }
+
+  const handlePress = () => {
+    console.log("botón apretado");
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador contador={1} />
+      </ContenedorDeMensaje>
+      <Button title="Apretame" onPress={handlePress} />
+    </View>
+  );
+}
+```
+
+- Ahora al apretar el botón se va a ver en consola el mensaje "botón apretado"
+- Como el event handler es una función y tiene acceso al scope del componente, podemos definir variables y fuera del event handler y tener acceso a ellas.
+
+```javascript
+export default function Index() {
+  let contador = 0;
+
+  function Contador({ contador }: { contador: number }) {
+    return <Text>{contador}</Text>;
+  }
+
+  const pressHandler = () => {
+    console.log(contador);
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador contador={1} />
+      </ContenedorDeMensaje>
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- Por convención las propiedades relacionadas con eventos se nombran empezando con `on`.
+- Si creamos un componente y este maneja eventos deberíamos nombrarlos como `onPress, onOpen, onClose, onPlay, onStop`.
+- Podemos ver que parámetro recibe el callback cuando se presiona el botón.
+- React Native tiene un objeto del tipo [PressEvent object](https://reactnative.dev/docs/pressevent).
+
+```javascript
+const pressHandler = (event) => {
+  console.log(event.nativeEvent.locationX);
+  console.log(event.nativeEvent.locationY);
+};
+```
+
+- En este ejemplo podemos ver en que parte del botón se hizo el evento Press.
+
+### Estado
