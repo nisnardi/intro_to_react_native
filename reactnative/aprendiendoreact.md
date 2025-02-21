@@ -1279,3 +1279,118 @@ const pressHandler = (event) => {
 - En este ejemplo podemos ver en que parte del botón se hizo el evento Press.
 
 ### Estado
+
+- Los componentes en React pueden o no tener estado.
+- Las variables locales de cada componente no mantienen su valor después de cada render.
+- Cambios a las variables locales tampoco generan que React haga un render nuevo.
+- Por medio del estado podemos mantener valores entre renders.
+- Cambiar una variable que mantiene estado genera que React haga un nuevo render.
+- Para poder agregar estado usamos una función llamada `useState()`.
+- `useState` acepta como parámetro un valor inicial.
+- `useState` devuelve un `array` con dos valores.
+- El array que devuelve useState tiene la siguiente forma: `[variable, funcion]`.
+- Dado que estamos desestructurando un array podemos ponerle el nombre que queremos tanto a la función como a la variable pero tiene que tener sentido al nombrarlo.
+- Por ejemplo si vamos a crear un estado para saber si el componente está cargando o no podemos utilizar algo como `[isLoading, setIsLoading]`.
+- Seguimos la idea de que si la variable tiene un nombre, la función va a tener la palabra `set` y despues el nombre de la variable.
+- La variable nos da el estado.
+- La función nos permite establecer un nuevo valor de estado.
+- `useState` se importa de react de la siguiente manera: `import { useState } from 'react'`.
+- Por ejemplo podemos hacer un contador y mostrar el resultado:
+
+```javascript
+export default function Index() {
+  let contador = 0;
+
+  function Contador({ contador }: { contador: number }) {
+    return <Text>{contador}</Text>;
+  }
+
+  const pressHandler = (event) => {
+    console.log(event.nativeEvent.locationX);
+    console.log(event.nativeEvent.locationY);
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador contador={1} />
+      </ContenedorDeMensaje>
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- Primero vamos a agregar el estado:
+
+```javascript
+import { useState } from "react";
+
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return <Text>{contador}</Text>;
+  }
+
+  const pressHandler = (event) => {
+    console.log(event.nativeEvent.locationX);
+    console.log(event.nativeEvent.locationY);
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador contador={1} />
+      </ContenedorDeMensaje>
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- Ahora modificamos el event handler para que al ser apretado el button se sume uno al estado y se muestre en pantalla.
+
+````javascript
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return <Text>{contador}</Text>;
+  }
+
+  const pressHandler = () => {
+    const nuevoValor = contador + 1;
+    setContador(nuevoValor);
+  };
+
+  return (
+    <View>
+      <ContenedorDeMensaje>
+        <Contador contador={contador} />
+      </ContenedorDeMensaje>
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}```
+````
+
+- Muy bueno, no?
+- `useState` se conoce en React como el concepot de `hook`.
+- Podemos decir que algo en react que el nombre empieza con `use` es un hook.
+- Los `hooks` son unas funciones especiales dentro de React que sólo están disponibles cuando React renderiza el component.
+- Cuando llamamos a `useState` le estamos diciendo que queremos recordar algo entre renders.
+- En este caso es el valor del contador.
+- Creamos la variable contador con el valor 0 inicialmente.
+- Luego al hacer press en el botón llamamos a `setContador` pasando el nuevo valor.
+- React nota que cambió el valor del estado entonces hace un render nuevo.
+- Ahora `contador` tiene el número 1.
+- Así seguimos el mismo proceso cada vez que se presiona el botón.
+- En un componente podemos tener múltiples variables que manejen estado y React re-renderiza cuando cambia cada una pero lo hace de una manera muy rápida y eficaz.
+- `useState` acepta cualquier tipo de valor, puede ser un array, objeto, boolean o lo que sea.
+- Si necesitamos cambiar muchas cosas del estado al mismo tiempo por ahí conviene utilizar otro tipo de dato en lugar que sólo uno por vez.
+- Para que React sepa que valor cambió y poder utilizar hooks debemos siempre declararlos en la parte superior de nuestro componente.
+- React llama a los hooks en el orden que fueron establecidos.
+- Algo importante a destacar es que el estado de un componente es propio y privado de ese componnte.
+- Si tenemos más de un componente (así sea el mismo tipo) en nuestra pantalla, cada uno tiene su propio estado.
+- Para poder compartir estado entre componentes debemos utilizar otro componente padre que orqueste todos los cambios.
