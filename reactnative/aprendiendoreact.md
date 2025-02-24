@@ -1394,3 +1394,294 @@ export default function Index() {
 - Algo importante a destacar es que el estado de un componente es propio y privado de ese componnte.
 - Si tenemos más de un componente (así sea el mismo tipo) en nuestra pantalla, cada uno tiene su propio estado.
 - Para poder compartir estado entre componentes debemos utilizar otro componente padre que orqueste todos los cambios.
+
+### Cómo renderiza React un componente
+
+- React tiene un proces de renderizado que se divide en 3 etapas:
+  - Disparar un render
+  - Renderizar el componente
+  - Hacer los cambios
+
+### Disparar un render
+
+- Hay dos razones para renderizar un componente:
+  - Render inicial para mostrar el componente.
+  - Cambio de estado del componente o de algún otro componente de mayor jerarquia.
+
+```javascript
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return (
+      <Text style={{ textAlign: "center", fontSize: 18 }}>{contador}</Text>
+    );
+  }
+
+  const pressHandler = () => {
+    const nuevoValor = contador + 1;
+    setContador(nuevoValor);
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Contador contador={contador} />
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- El primer render se da cuando la app carga y muestra la primer pantalla.
+- En este ejemplo cada vez que el usuario presiona el botón `Apretame` se llama a ``setContador` que vino de `useState`.
+- `Index` tiene el estado del contador.
+- Cada vez que se cambia el estado `contador` se re-renderiza el component.
+- Dado que Contador utiliza la variable `contador` también se re-renderiza.
+
+#### Render de los componentes
+
+- Luego de que se dispare un render, React necesita entender que va a mostrar en pantalla.
+  - En el primer render React llama al componente principal.
+  - En renders consecutivos llama a las funciones de los componentes de los cuales el estado fue actualizado.
+- React maneja de manera recursiva el render de todos los componentes que cambiaron (son funciones que devuelven componentes).
+- Al tener que hacer un render de nuevo, React calcula que propiedades cambiaron del render anterior.
+- React utiliza la información obtenedia para utilizarla en el próximo paso del render.
+
+#### React hace los cambios
+
+- React llama al sistema operativo para hacer el render en cada OS.
+- En el el render consecutivo sólo aplica las diferencias con el render anterior.
+- Es decir que para que React haga un cambio, tiene que existir un cambio entre renders y sino no re-renderiza nada.
+
+### Varios cambios de estado
+
+- Cada vez que llamamos a una función que setea el estado le dice a React que para el próximo render utilice este valor.
+
+```javascript
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return (
+      <Text style={{ textAlign: "center", fontSize: 18 }}>{contador}</Text>
+    );
+  }
+
+  const pressHandler = () => {
+    setContador(contador + 1);
+    setContador(contador + 1);
+    setContador(contador + 1);
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Contador contador={contador} />
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- Si vemos este código nos imaginaríamos que React va a actualizar el estado en cada render.
+- En realidad React tiene en cuenta el cambio pedido pero `contador` nunca cambia de valor hasta el próximo render.
+- React espera que se ejecute todo el código del event handler para hacer el udpate del estado.
+- Dado que contador tenía un valor en el momento de presionar el botón, React utiliza ese valor.
+- Si empezamos el contador en 0 y apretamos el botón una vez esperando que `contador` sea 3 no va a funcionar.
+- `contador` para todo el render va a valer 0 (valor inicial) y le sumamos 1 por lo cual va dar siempre 1.
+- En el próximo render React utiliza 1 como valor de `contador`.
+- Esto permite que se haga update de varias variables del estado y luego ejecutar el render con el update.
+- En el fondo no sabemos bien cuando se va a ejecutar el update del estado.
+- Esta forma de manejar los cambio hace que React sea rápido y performante sin tener que andar realmente haciendo todos los cambios de a uno.
+- React en la función que nos da `useState` nos permite acceder al estado previo.
+- La función `set` acepta un callback que React ejecuta luego de que el estado se actualizo.
+- Por ejemplo: `setContador((contadorAnterior) => contadorAnterior + 1)`.
+- De esta manera en el próximo render React asigna a `contadorAnterior` el valor el estado anterior.
+
+```javascript
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return (
+      <Text style={{ textAlign: "center", fontSize: 18 }}>{contador}</Text>
+    );
+  }
+
+  const pressHandler = () => {
+    setContador((contadorPrev) => contadorPrev + 1);
+    setContador((contadorPrev) => contadorPrev + 1);
+    setContador((contadorPrev) => contadorPrev + 1);
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Contador contador={contador} />
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- En este caso en el primer llamado `contadorPrev` es 0 y le suma 1.
+- En el próximo llamado el estado pasó a ser 1 y le suma 1 convirtiendolo en 2.
+- En el último llamado `contadorPrev` tiene asignado el valor 2 y le vuelve a sumar un generando 3.
+- Es por esto que al presionar el botón muestra 3 en lugar de 1.
+- Tenemos que recordar entonces que si queremos utilizar el valor del estado anterior y modificarlo debemos utilizar este callback que nos garantiza cual era el estado anterior.
+- Podemos utilizar el conecepto anterior y el actual.
+
+```javascript
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return (
+      <Text style={{ textAlign: "center", fontSize: 18 }}>{contador}</Text>
+    );
+  }
+
+  const pressHandler = () => {
+    setContador(10);
+    setContador((contadorPrev) => contadorPrev + 1);
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Contador contador={contador} />
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- React establece el estado de `contador` en 10.
+- Luego utiliza el callback para tomar el valor anterior que en este caso es 10.
+- Le suma uno y asigna el valor 11 como estado de `contador`.
+- Si llegamos a llamar a actualizar estado luego de esto quedará el último valor establecido.
+
+```javascript
+export default function Index() {
+  const [contador, setContador] = useState(0);
+
+  function Contador({ contador }: { contador: number }) {
+    return (
+      <Text style={{ textAlign: "center", fontSize: 18 }}>{contador}</Text>
+    );
+  }
+
+  const pressHandler = () => {
+    setContador(10);
+    setContador((contadorPrev) => contadorPrev + 1);
+    setContador(100);
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Contador contador={contador} />
+      <Button title="Apretame" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- Este ejemplo muestra en pantalla 100 porque es el último llamado de estado que tenemos y sobreescribe los anteriores.
+- El callback se agrega a una cola de updates que se ejecuta después de establecer un valor.
+- La asignación de valor por parámetro normal sobrescribe el valor del estado sin importar que hay en cola de cambios.
+
+### Utilizando objetos en el estado
+
+- React permite utilizar `useState` con cualquier tipo de dato y eso incluye a los objetos.
+- La idea es utilizar objetos cuando tenga sentido y sino utilizar valores de estados individuales.
+- Al utilizar un objeto en estado debemos utilizar la función `set` para cambiar el valor del objeto y no por medio de modificar sus propiedades.
+
+```javascript
+export default function Index() {
+  const [alumno, setAlumno] = useState({ nombre: "Nicolas", promedio: 8 });
+
+  const pressHandler = () => {
+    const nuevoNombre = "Roman";
+    const nuevoPromedio = 10;
+
+    setAlumno({ nombre: nuevoNombre, promedio: nuevoPromedio });
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Text style={{ textAlign: "center" }}>Nombre: {alumno.nombre}</Text>
+      <Text style={{ textAlign: "center" }}>Promedio: {alumno.promedio}</Text>
+      <Button title="Actualizar" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- Tenemos que pensar el objeto que está en el estado como sólo de leectura.
+- Si lo queremos actualizar debemos establcer los valores con la función `set` que nos dió `useState`.
+- Si queremos mantener alguno de los valores del estado anterior podemos utilizar el operador `...` spread.
+
+```javascript
+export default function Index() {
+  const [alumno, setAlumno] = useState({ nombre: "Nicolas", promedio: 8 });
+
+  const pressHandler = () => {
+    const nuevoNombre = "Roman";
+    const nuevoPromedio = 10;
+
+    setAlumno({
+      ...alumno,
+      promedio: nuevoPromedio,
+    });
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Text style={{ textAlign: "center" }}>Nombre: {alumno.nombre}</Text>
+      <Text style={{ textAlign: "center" }}>Promedio: {alumno.promedio}</Text>
+      <Button title="Actualizar" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- En este ejemplo vemos como usando el operador spread podemos poner las propiedades del objeto del estado y sobreescribir un valor.
+- Ahora el promedio cambió pero el nombre sigue siendo el mismo.
+- Para datos que están relacionados tiene sentido mantenerlos en un sólo objeto.
+- Por ejemplo si armamos un formulario vamos a utilzar todos los valores en un solo objeto a no ser que lo necesitemos de manera individual.
+- Spread no genera un nuevo objeto en caso de tener objetos anidados.
+- Si tenemos ese caso debemos no solo utilizar spread en el objeto principal sino también en las propiedades.
+
+```javascript
+export default function Index() {
+  const [alumno, setAlumno] = useState({
+    nombre: "Nicolas",
+    promedio: 8,
+    amigo: { nombre: "Cristian" },
+  });
+
+  const pressHandler = () => {
+    const nuevoNombre = "Roman";
+
+    setAlumno({
+      ...alumno,
+      nombre: nuevoNombre,
+      amigo: {
+        nombre: "Damian",
+      },
+    });
+  };
+
+  return (
+    <View style={{ paddingTop: 10 }}>
+      <Text style={{ textAlign: "center" }}>Nombre: {alumno.nombre}</Text>
+      <Text style={{ textAlign: "center" }}>Promedio: {alumno.promedio}</Text>
+      <Text style={{ textAlign: "center" }}>Amigo: {alumno.amigo.nombre}</Text>
+      <Button title="Actualizar" onPress={pressHandler} />
+    </View>
+  );
+}
+```
+
+- En este caso tenemos que sobrescribir el amigo.
+- Esto pasa porque el operador `...` spread no genera un nuevo objeto para la propiedad amigo.
+- Sin sobrescribir JavaScript va a utilizar la referencia al objeto `amigo` anterior.
+- La idea es que el estado sea Inmutable y que utilicemos valores nuevos en lugar de mutar los que había.
+- Esto permite que React haga comparaciones y sepa que cambió entre renders.
