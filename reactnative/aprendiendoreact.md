@@ -1686,7 +1686,7 @@ export default function Index() {
 - La idea es que el estado sea Inmutable y que utilicemos valores nuevos en lugar de mutar los que había.
 - Esto permite que React haga comparaciones y sepa que cambió entre renders.
 
-#### Conceptos importantes del estado:
+#### Conceptos importantes del estado con objetos:
 
 - Manejar el estado como si fuera inmutable.
 - Cuando usamos objetos en el estado en lugar de cambiar sus valores debemos crear nuevas instancias para que React pueda saber que algo cambió y re renderizar.
@@ -1708,3 +1708,137 @@ export default function Index() {
 | Remover   | `pop, shift, splice`           | `filter, slice`                           |
 | Remplazar | `splice, array[index] = value` | `map`                                     |
 | Ordenar   | `reverse, sort`                | `crear un nuevo array y luego ordernarlo` |
+
+```javascript
+const animales = ["Perro", "Gato", "Pato"];
+const newAnimalesState = [...animales, "Loro"];
+
+setAnimales(newAnimalesState);
+```
+
+- En este ejemplo vemos como creamos un nuevo array utilizando los valores de la colección anterior.
+- Luego agregamos el valor que nosotros necesitamos.
+- Una vez que tenemos el nuevo estado podemos establecerlo utilizando la función que nos dió `useState`.
+- Según en que posición pongemos el nuevo valor se va a ver reflejado en el orden de los items de la colección.
+
+```javascript
+const animales = ["Perro", "Gato", "Pato"];
+const newAnimalesState = ["Loro", ...animales];
+
+setAnimales(newAnimalesState);
+```
+
+- En este ejemplo vemos como el nuevo valor va en el inicio de la colección.
+- Esto es útil si queremos siempre poner el último item en el primer lugar al agregar un nuevo valor.
+- Si queremos remover un item de la colección lo podemos hacer utilizando `filter`.
+
+```javascript
+const animales = ["Perro", "Gato", "Pato"];
+const newAnimalesState = animales.filter((animal) => animal !== "Gato");
+
+setAnimales(newAnimalesState);
+```
+
+- En este caso usamos filter para buscar el valor Gato y borrarlo de la colección.
+- Dado que filter ya filtra datos por una condición nos ayuda a sacar los valores que no queremos y crea una nueva colección por nosotros.
+- De esta manera no tenemos que manipular el array nosotros.
+
+```javascript
+const animales = ["Perro", "Gato", "Pato"];
+
+const newAnimalesState = animales.map((animal) => {
+  if (animal === "Gato") {
+    return animal.toUpperCase();
+  }
+
+  return animal;
+});
+
+setAnimales(newAnimalesState);
+```
+
+- En este caso usamos `map` para recorrer la colección, modificar el valor que queremos y finalmente devolver una nueva colección con el valor modificado.
+- El resto de los valores siguen estando igual.
+- También se puede dar la situación donde queremos insertar un nuevo elemento en una posición particular.
+
+```javascript
+const posicion = 2;
+const animales = ["Perro", "Gato", "Pato"];
+const newState = [
+  ...animales.slice(0, posicion),
+  "Mono",
+  ...animales.slice(posicion),
+];
+
+setAnimales(newState);
+```
+
+- En este ejemplo vemos como usando `slice` para obtener datos del array actual nos permite establecer que parte queremos utilizar de la colección animales.
+- Agregamos el valor que queremos en la posición esperada.
+- Finalmente agregamos el resto de los items.
+- También podemos revertir una lista de la siguiente manera.
+
+```javascript
+const animales = ["Perro", "Gato", "Pato"];
+const newState = [...animales].reverse();
+
+setAnimales(newState);
+```
+
+- Dado que creamos una nueva colección podemos cambiar el orden utilizando `reverse`.
+- Luego establecemos el nuevo valor.
+- Uno de los problemas que podemos tener es cuando tenemos colecciones con objetos:
+
+```javascript
+const animales = [
+  { id: 1, nombre: "Perro" },
+  { id: 2, nombre: "Gato" },
+  { id: 3, nombre: "Pato" },
+];
+
+const newState = animales.map((animal) => {
+  if (animal.id === 2) {
+    return { ...animal, nombre: animal.nombre.toUpperCase() };
+  }
+
+  return animal;
+});
+
+setAnimales(newState);
+```
+
+- En este ejemplo vemos como podemos iterar la colección animales usando `map`.
+- `map` devuelve un nuevo array por lo cual con eso creamos la nueva colección.
+- Luego tenemos el problema que los objetos tienen que ser nuevos si los vamos a alterar.
+- Ahí es donde podemos buscar el elemento de la colección que queremos y hacer el cambio.
+- La clave está en devolver un nuevo objeto con los valores del objeto que queremos modificar.
+- `{ ...animal, nombre: animal.nombre.toUpperCase() }` primero usamos `...spread` para copiar las propiedades y valores anteriores, luego modificamos el valor que necesitamos.
+- Finalmente retornamos el objeto modificado pero como una nueva instancia.
+- Si no es el elemento que queremos retornamos el que esta en el estado actualmente.
+- La regla es que cuando manejamos estado sólo modifiquemos objetos que nosotros creamos y no los que vienen del estado.
+
+#### Conceptos importantes del estado con colecciones:
+
+- Podemos utilizar arrays en el estado pero no podemos modificarlos.
+- En lugar de mutar un array debemos crear una nueva coleeción antes de cambiar el estado.
+- Para obtener los valores de la colección podemos utilizar spread.
+- Utilizamos `filter o map` para crear una nueva colección.
+
+### Manera declarativa de pensar en UI
+
+- Programación declarativa significa describir la UI para cada estado en lugar de hacerle micro-managing a cada parte de la UI.
+
+1. Identificar los diferentes estados de nuestros componentes.
+2. Determinar que cambia los diferentes estados.
+3. Representar ese estado usando `useState`.
+4. Borrar cualquier variable del estado que no sea esencial.
+5. Conectar los event handler para cambios de estado.
+
+- Viendo estas definiciones podemos entender que nos vamos a encargar de manejar el estado y luego dejar que React haga los cambios por nosotros.
+- En React no vamos a agregar a mano un component u otro sino que vamos a manejar el estado.
+- Luego React se va a encargar de agregar o sacar componentes según le especificamos en el estado.
+- A React vamos a pensar / trabajar de la siguiente manera:
+
+> Con todo lo que vimos hasta acá podemos decir que sabemos bastante sobre React!!
+
+![Coding](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExc25mZnY3emZnOXAxNXB0Y24zM3VxNG51d3JpdTZiOGgzb3o0NTBjNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ws6T5PN7wHv3cY8xy8/giphy.gif)
