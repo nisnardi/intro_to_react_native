@@ -1685,3 +1685,26 @@ export default function Index() {
 - Sin sobrescribir JavaScript va a utilizar la referencia al objeto `amigo` anterior.
 - La idea es que el estado sea Inmutable y que utilicemos valores nuevos en lugar de mutar los que había.
 - Esto permite que React haga comparaciones y sepa que cambió entre renders.
+
+#### Conceptos importantes del estado:
+
+- Manejar el estado como si fuera inmutable.
+- Cuando usamos objetos en el estado en lugar de cambiar sus valores debemos crear nuevas instancias para que React pueda saber que algo cambió y re renderizar.
+- Podes utilizar el spread operator para crear nuevos objetos pero recordar que no funciona para objetos anidados (objetos dentro de objetos).
+- Para poder usar objetos anidados debemos seguir el mismo principio y crear nuevas instancias de los mismos.
+
+### Utilizando Colecciones en el estado
+
+- Las colecciones en JavaScript son mutables como pasa con los objetos.
+- React nos permite utilizar colecciones en el estado.
+- Al igual que con los objetos debemos crear una nueva colección a la hora de actualizar el estado.
+- La idea es considerar a las colecciones que usamos en el estado como de leectura y no escritura.
+- Acá es donde juega un papel clave que método de los Array usamos ya que necesitamos utilizar los que generan una nueva colección al utilizarlos en lugar de los que modifican la colección actual.
+- Usar `filter` o `map` devuelven siempre una nueva colección que podemos utilizar a la hora de establecer un nuevo estado.
+
+|           | No utilizar (cambian el array) | Utilizar (devuelve un nuevo array)        |
+| --------- | ------------------------------ | ----------------------------------------- |
+| Agregar   | `push, unshift`                | `concat, [...], spread`                   |
+| Remover   | `pop, shift, splice`           | `filter, slice`                           |
+| Remplazar | `splice, array[index] = value` | `map`                                     |
+| Ordenar   | `reverse, sort`                | `crear un nuevo array y luego ordernarlo` |
