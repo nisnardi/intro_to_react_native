@@ -75,9 +75,10 @@
 - [Aprendiendo React](reactnative/aprendiendoreact.md)
 - [Componentes básicos de React Native](reactnative/componentesbasicosrn.md)
 - [Tarjeta Personal](reactnative/tarjetapersonal.md)
+- [Ta Te Ti](reactnative/tictactoe.md)
+
 <!--
 - [Pensando en React](reactnative/pensandoenreact.md)
-- [Ta Te Ti](reactnative/pensandoenreact.md)
   -->
 
 <!--
