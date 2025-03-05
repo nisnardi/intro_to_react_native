@@ -74,7 +74,8 @@
 - [Crear tu primer Proyecto con Expo](reactnative/primerproyecto.md)
 - [Aprendiendo React](reactnative/aprendiendoreact.md)
 - [Componentes básicos de React Native](reactnative/componentesbasicosrn.md)
-- [Intro Flexbox](https://flexboxfroggy.com/#es)
+- [Conceptos Básicos de flexbox](https://developer.mozilla.org/es/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox)
+- [Flexbox Froggy en Español](https://flexboxfroggy.com/#es)
 - [Tarjeta Personal](reactnative/tarjetapersonal.md)
 - [Ta Te Ti](reactnative/tictactoe.md)
 
