@@ -2360,3 +2360,554 @@ return (
 - Con esto el Modal debería estar funcionando correctamente.
 - Ahora resta mostrar los diferentes estados, permitirle al usuario presionar uno y finalmente esconder el Modal para ver el tablero.
 - También le vamos a agregar algún diseño al modal para que se vea mejor.
+
+```javascript
+import {
+  Text,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  View,
+  ScrollView,
+} from "react-native";
+
+import AntDesign from "@expo/vector-icons/AntDesign";
+
+const HistoryButton = ({ title, onPress }) => {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.button,
+        pressed && { backgroundColor: "cornflowerblue" },
+      ]}
+    >
+      {({ pressed }) => (
+        <Text style={[styles.buttonText, pressed && { color: "white" }]}>
+          {title}
+        </Text>
+      )}
+    </Pressable>
+  );
+};
+
+export const HistoryModal = ({ isVisible, onClose }) => {
+  return (
+    <Modal animationType="slide" visible={isVisible}>
+      <SafeAreaView style={styles.modalContainer}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Historial</Text>
+          <Pressable onPress={onClose}>
+            <AntDesign name="close" size={30} color="black" />
+          </Pressable>
+        </View>
+        <ScrollView style={styles.list}>
+          <HistoryButton title="Ir al comienzo del juego" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #2" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #3" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #4" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #5" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #6" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #7" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #8" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #9" onPress={() => {}} />
+        </ScrollView>
+      </SafeAreaView>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+  },
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomColor: "#DDD",
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  list: { flex: 1, width: "100%", paddingHorizontal: 40 },
+  button: {
+    width: "100%",
+    backgroundColor: "#DDD",
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+```
+
+- Agregamos este contenido y estilo al Modal.
+  Vamos a ver por partes para ver que tenemos.
+
+```javascript
+import {
+  Text,
+  Modal,
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  View,
+  ScrollView,
+} from "react-native";
+
+import AntDesign from "@expo/vector-icons/AntDesign";
+```
+
+- Agregamos los imports de todos los componentes que necesitamos para crear el Modal.
+- También agregamos `AntDesign` que es uno de la [familia de íconos que nos da expo-icon](https://icons.expo.fyi/Index/AntDesign/close).
+
+```javascript
+const HistoryButton = ({ title, onPress }) => {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.button,
+        pressed && { backgroundColor: "cornflowerblue" },
+      ]}
+    >
+      {({ pressed }) => (
+        <Text style={[styles.buttonText, pressed && { color: "white" }]}>
+          {title}
+        </Text>
+      )}
+    </Pressable>
+  );
+};
+```
+
+- Creamos un nuevo componente con el nombre `HistoryButton` que lo vamos a utilizar como botón para que el usuario presione al elegir a que parte de la historia de la partida quiere volver.
+- Este componente recibe 2 parámetros `title y onPress` para mostrar un mensaje y un callback para manejar el evento `onPress`.
+- Usamos `Pressable` para dejar que el usuario haga press.
+
+```javascript
+ style={({ pressed }) => [
+  styles.button,
+  pressed && { backgroundColor: "cornflowerblue" },
+]}
+```
+
+- Dado que Pressable no tiene forma de mostrar al usuario cuando hace press podemos usar la función que nos da Pressable a la hora de usar estilos.
+- En lugar de pasar un array o un objeto de estilos en este caso se pasa una función (callback) que tiene como parámetro si el botón fue presionado.
+- Dado que `press` es una variable del tipo boolean podemos utilizarlo para por ejemplo cambiar el color de fondo.
+- `[ styles.button, pressed && { backgroundColor: "cornflowerblue" }]` en este código establecemos primero que se utilice el estilo establecido en `styles.button` y luego sobrescribimos la propiedad bracgroundColor cuando el botón es presionado.
+- Usamos el condicional `pressed && {}` pero también podríamos haber usado un ternario `pressed ? {} : {}`.
+
+```javascript
+{
+  ({ pressed }) => (
+    <Text style={[styles.buttonText, pressed && { color: "white" }]}>
+      {title}
+    </Text>
+  );
+}
+```
+
+- Pressable también nos permite utilizar una función como hijo para pasarle al hijo del botón si el padre fue presionado o no.
+- De la misma forma que hicimos con el backgroundColor de Pressable ahora podemos cambiar el color de texto del componente Text.
+- `[styles.buttonText, pressed && { color: "white" }]` otra vez sobrescribimos el estilo, primero asignando `buttonText` y luego pisando el color del texto para que sea blanco.
+- Ahora veamos el contenido del Modal:
+
+```javascript
+export const HistoryModal = ({ isVisible, onClose }) => {
+  return (
+    <Modal animationType="slide" visible={isVisible}>
+      <SafeAreaView style={styles.modalContainer}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Historial</Text>
+          <Pressable onPress={onClose}>
+            <AntDesign name="close" size={30} color="black" />
+          </Pressable>
+        </View>
+        <ScrollView style={styles.list}>
+          <HistoryButton title="Ir al comienzo del juego" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #2" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #3" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #4" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #5" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #6" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #7" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #8" onPress={() => {}} />
+          <HistoryButton title="Ir al movimiento #9" onPress={() => {}} />
+        </ScrollView>
+      </SafeAreaView>
+    </Modal>
+  );
+};
+```
+
+- El componente se llama `HistoryModal` y por ahora acepta 2 propiedades `isVisible` para saber si el modal debe mostrarse y un callback con el nombre de `onClose` que le pasa el componente padre para decirle que lo ejecute cuando se cierra.
+
+```javascript
+<Modal animationType="slide" visible={isVisible}>
+```
+
+- Establecemos que esto es un Modal que va a aparecer usando una animación `slide` que viene de abajo para arriba.
+- La propiedad `visible` es lo que hace que el Modal se vea o no y acepta un valor boolean.
+
+```javascript
+<SafeAreaView style={styles.modalContainer}>
+```
+
+- Agregamos un `SafeAreaView` para asegurarnos que el contenido del Modal se siga viendo bien en todos los dispositivos.
+
+```javascript
+<View style={styles.header}>
+  <Text style={styles.title}>Historial</Text>
+  <Pressable onPress={onClose}>
+    <AntDesign name="close" size={30} color="black" />
+  </Pressable>
+</View>
+```
+
+- Este componente representa el Header del Modal.
+- Tiene un título con el texto `Historial` y un ícono que al presionarlo llama a la función que pasó el componente padre para cambiar el valor de isVisible y de esta manera que se deje de ver el Modal.
+- Usamos el nombre de icono `close` para mostrar un X y hacemos que se vea más grande estableciendo la propiedad `size` en 30 y de `color` negro (black).
+
+```javascript
+<ScrollView style={styles.list}>
+  <HistoryButton title="Ir al comienzo del juego" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #2" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #3" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #4" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #5" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #6" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #7" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #8" onPress={() => {}} />
+  <HistoryButton title="Ir al movimiento #9" onPress={() => {}} />
+</ScrollView>
+```
+
+- En esta sección tenemos un ScrollView para que en caso de que la app corra en un dispositivo más chico se pueda seguir viendo bien.
+- Por ahora tenemos una lista de botones que muestran las posibles jugadas.
+- Esto se va a tener que convertir en algo dinámico porque sino podemos caer en que el usuario quiera ir a un estado que no existe todavía.
+
+```javascript
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+  },
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomColor: "#DDD",
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  list: { flex: 1, width: "100%", paddingHorizontal: 40 },
+  button: {
+    width: "100%",
+    backgroundColor: "#DDD",
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+```
+
+- El estilo `modalContainer` usa `flex:1` para tomar todo el espacio disponible de la pantalla.
+- `header` tiene varias propiedades:
+  - `width: "100%"`: establece que queremos utilizar el 100% del ancho de la pantalla.
+  - `flexDirection: "row"`establece que queremos que los componentes estén uno al lado del otro en una fila.
+  - `justifyContent: "space-between"`: dado que usamos `row` esta propiedad alinea de manera horizontal los componentes en para que estén cada uno en una punta del header.
+  - `alignItems: "center"`: dado que usamos `row` esta propiedad alinea de manera vertical los componentes en el centro del header (así queda mejor el texto y el icono).
+  - `borderBottomColor: "#DDD" y borderBottomWidth: 1`: establecen que vamso a unsar un borde inferior de 1 pixel y también que es de color gris claro como para poner una división entre el header y el contenido.
+  - `paddingHorizontal: 20`: establece un aire interior de 20 para izquierda y derecha como para distanciar el text e icono de los bordes.
+  - `paddingBottom: 10`: establece un aire inferior de 10 para generar espacio entre el texto / icono y el borde inferior.
+  - `marginBottom: 20`: finalmente le agregamos un margen inferior que es un aire externo al borde para distanciarlo del contenido.
+- ` title`: utiliza `fontSize: 30 y fontWeight: "bold"` para que el texto tenga 30 de tamaño de tipografía y fontWeight para decirle que muestre el texto en negrita.
+- `list`: usa `flex: 1` y `width: "100%"` para cubrir el ancho y alto del espacio restante de la pantalla. También usa `paddingHorizontal: 40` para generar un aire de 40 en el lado izquiedo y derecho al mismo tiempo.
+- `button`: tiene varias propiedades ya conocidoas:
+  - `width: "100%"` establece el ancho al 100%.
+  - `backgroundColor: "#DDD"`: hace que el fondo / background del componente sea gris.
+  - `borderRadius: 10`: hace que el borde tenga las puntas redondeadas. Mayor es el número mayor es que tan redondeado es.
+  - `padding: 20`: para establecer que tanto `top, bottom, left, right` tengan todos el mismo padding de 40 generando aire dentro del botón.
+  - `marginBottom: 10` es un espacio para separar los botones.
+- Ahora que tenemos el Modal funcionando y con un diseño que más o menos nos gusta podemos encargarnos de agregar lo que falta para que la feature de viajar en el tiempo funcione.
+- Para poder mostrar los botones primero el Modal tiene que obtener los pasos disponibles, para esto podemos pasarle la colección `history` al Modal como parámetro y luego utilizar eso para crear los botones de manera dinámica.
+
+```javascript
+// index.tsx
+<HistoryModal
+  isVisible={isModalVisible}
+  onClose={onHideHistoryModal}
+  history={history}
+/>;
+
+// components/HistoryModal.tsx
+export const HistoryModal = ({ isVisible, onClose, history }) => {
+  // Codigo del component
+};
+```
+
+- Ahora que ya tenemos el historial y que es una colección podemos utilizar map para crear los botones de manera dinámica.
+
+```javascript
+<ScrollView style={styles.list}>{history}</ScrollView>
+```
+
+- Sabemos que usando `{}` dentro de JSX podemos usar JavaScript.
+- Para crear los botones usamos `map` que devuelve una colección nueva de compponentes usando los datos que tenemos del history.
+
+```javascript
+{
+  history.map((squares, move) => {});
+}
+```
+
+- Sabemso que `map` toma un callback como parámetro y que a esa función la llama con 2 parámetros. Primero pasa el item de la colección y en este casos sabemos que es el array `squares` que corresponde a un estado en particular. El segundo parámetro sabemos que es el ínidice y acá lo llamamos `move` por movimiento, es decir en que movimiento estamos.
+
+```javascript
+{
+  history.map((squares, move) => {
+    let description;
+    if (move > 0) {
+      description = "Ir al movimiento #" + move;
+    } else {
+      description = "Ir al comienzo del juego";
+    }
+
+    return <HistoryButton title={description} onPress={() => {}} />;
+  });
+}
+```
+
+- Iteramos la colección del historial y creamos una nueva variable `description` donde vamos a guardar el título del boton.
+- Si es el primer movimiento le ponemos el texto `Ir al comienzo del juego` y sino `Ir al movimiento #` + el movimiendo que le corresponse.
+- Todavía falta manejar el evento `onPress` de cada botón y tenemos que decirle al componente padre `Game` que cambie el historial.
+- Para esto vamos a crear una nueva función en el componente `Game` con el nombre `jumpTo` y que va a aceptar un parámetro con el nombre de `nextMove`.
+- También le vamos a pasar al Modal la función `jumpTo` para que pueda ser llamada al presionar el botón. Vamos a llamar a la propiedad del Modal `onHistoryButtonPress` y le pasamos `jumpTo` como valor.
+
+```javascript
+// app/index.tsx
+<HistoryModal
+  isVisible={isModalVisible}
+  onClose={onHideHistoryModal}
+  history={history}
+  onHistoryButtonPress={jumpTo}
+/>;
+
+// components/HistoryModal.tsx
+export const HistoryModal = ({
+  isVisible,
+  onClose,
+  history,
+  onHistoryButtonPress,
+}) => {
+  // resto del código del componente.
+};
+```
+
+- Perfecto, ya tenemos el event handler ahora sólo queda llamarlo al presionar el botón.
+- Tenemos un problema con esto y es que necesitamos saber qué botón fue presionado y a que historial quiere viajar el usuario o jugador.
+- Para eso necesitamos que usando la función `onHistoryButtonPress` le podamos comunicar al componente `Game` cual es el `nextMove`.
+- Podemos hacer esto utilizando el ínidex de `map` al cual nombramos `move` y usando la función `onHistoryButtonPress`.
+
+```javascript
+<HistoryButton title={description} onPress={() => onHistoryButtonPress(move)} />
+```
+
+- Ahora podemos agregar un console.log en la función `jumpTo` del componente Game para ver que esté llegando el valor correcto.
+
+```javascript
+function jumpTo(nextMove) {
+  console.log(nextMove);
+}
+```
+
+- Genial, ahora al presionar el botón se ve el estado seleccionado por el jugador y estamos conectando componentes por medio de sus propiedades. GRAN TRABAJO HASTA ACA!!!.
+- Está muy bien lo que hicimos pero dado que tenemos el modal no podemos ver que pasa por lo cual necesitamos un paso extra y es que al seleccionar el nuevo estado tenemos que hacer dos cosas: `decirle al padre el paso seleccionado` y también `ocultar el modal`.
+- Por suerte tenemos callbacks para ambos y decirle al componente padre estas cosas!
+- Parece que necesitamos una nueva función con el nombre de `onPressHandler` que al llamarla le vamos a pasar el `move` seleccionado.
+- También vamos a llamar a la función `onClose` para que se oculte el modal.
+
+```javascript
+const onPressHandler = (move) => () => {
+  onHistoryButtonPress(move);
+  onClose();
+};
+
+<HistoryButton title={description} onPress={onPressHandler(move)} />;
+```
+
+- En este código tenemos algo que ya conocemos pero que de alguna forma sigue siendo raro. Una función que devuelve otra función.
+- El handler `onPress` acepta una función como parámetro que va a ser ejecutada al presionar el botón.
+- Hasta ahí no hay problema ya que cualquier función puede ser ejecutada como sería el caso de llamar `onPress={onPressHandler}`, no?
+- El tema es que necesitamos pasar un valor para que la función `onPress={onPressHandler` pueda decirle al padre cual es el movimiento seleccionado. Por eso es que la primer función recibe el parámetro move: `const onPressHandler = (move) => nuevaFuncion`.
+- Entonces llamar a `onPressHandler()` devuelve una función y le pasamos el número de movimiento `onPressHandler(move)`.
+- Dado que JavaScript tiene scope y las funciones hijas pueden acceder a los parámetros de las funciones padres podemos hacer esto:
+
+```javascript
+(move) => () => {
+  onHistoryButtonPress(move);
+  onClose();
+};
+```
+
+- Que es lo mismo que hacer:
+
+```javascript
+(move) => {
+  return () => {
+    onHistoryButtonPress(move);
+    onClose();
+  };
+};
+```
+
+- Por ahí queda más claro de esta forma lo que estamos haciendo.
+- La función que es retornada es la que finalmente el componente llama cuando se despacha el evento onPress del botton.
+- Dentro de la función retornada sabemos cual es el movimiento por el parametro `move` y llamamos a las dos funciones que necesitamos para mostrar el paso seleccionado y también ocultar el modal.
+- UFFFFF.... eso fue MUCHO, tiempo de ir a comer o tomar algo que te guste como premio, pero no tardes mucho, hay que seguir.
+- Algo que por ahí viste o no al mostrar el paso seleccionado presionando el botón es que React está tirando un error ` (NOBRIDGE) ERROR  Warning: Each child in a list should have a unique "key" prop.`.
+- Al recorrer el array `history` dentro de la función que pasamos a map, el argumento `squares` recorre cada elemento de history, y el argumento `move` recorre cada índice del array: 0, 1, 2, .... (En la mayoría de los casos, necesitarías los elementos reales del array, pero para representar una lista de movimientos sólo necesitarás los índices).
+- Para cada movimiento en la historia del juego, se crea un componente `HistoryButton` que contiene un botón. El botón tiene un event handler `onPress` que llama a una función llamada onPressHandler (que aún no implementamos).
+- Por ahora, deberías ver una lista de los movimientos que ocurrieron en el juego y un error en la consola de herramientas del desarrollador. Vamos a discutir lo que significa el error.
+- cuando renderizas una lista, React almacena cierta información sobre cada elemento renderizado.
+- Cuando actualizamos una lista, React necesita determinar qué ha cambiado.
+- No sabe si añadimos, eliminamos, cambiamos o actualizado algún componente de la lista.
+
+```javascript
+// No sabe si es esto:
+<ScrollView style={styles.list}>
+  <HistoryButton title="Ir al comienzo del juego" onPress={() => {}} />
+</ScrollView>
+
+// O esto
+<ScrollView style={styles.list}>
+  <HistoryButton title="Ir al movimiento #2" onPress={() => {}} />
+  <HistoryButton title="Ir al comienzo del juego" onPress={() => {}} />
+</ScrollView>
+```
+
+- Un humano se puede dar cuenta de los cambios realizados con tan solo verlo pero React no puede. -
+- Es por esto que necesitamos especificar una propiedad `key` para cada elemento de la lista para diferenciar cada elemento de la lista.
+- Podríamos genera un ID para cada movimento pero para este ejercicio estamos bien con tan sólo usar el índice del array.
+
+```javascript
+<HistoryButton title={description} onPress={onPressHandler(move)} key={move} />
+```
+
+- Cuando se vuelve a renderizar una lista, React toma la `key` de cada elemento de la lista y busca en los elementos de la lista anterior una clave que coincida.
+  - Si la lista actual tiene una `key` que no existía antes, React crea un componente.
+  - Si a la lista actual le falta una `key` que existía en la lista anterior, React destruye el componente anterior.
+  - Si dos `key` coinciden, se mueve el componente correspondiente.
+- Las `key` informan a React sobre la identidad de cada componente, lo que permite a React mantener el estado entre re-renders.
+- Si la `key` de un componente cambia, el componente será destruido y recreado con un nuevo estado.
+- `key` es una propiedad especial y reservada en React.
+- Cuando se crea un elemento, React extrae la propiedad `key` y la almacena directamente en el elemento devuelto.
+- Aunque parezca que `key` se pasa como props, React usa `key` automáticamente para decidir qué componentes actualizar.
+- No hay forma de que un componente pregunte qué `key` especificó su padre.
+- Es muy recomendable que asignes claves apropiadas siempre que construyas listas dinámicas. Si no tienes una clave apropiada, puedes considerar reestructurar tus datos para que la tengas.
+- Si no se especifica ninguna `key`, React informará de un error y usará el índice del array como clave por defecto.
+- Usar el índice del array como clave es problemático cuando se intenta reordenar los elementos de una lista o insertar/eliminar elementos de una lista.
+- Pasar explícitamente key={i} silencia el error pero tiene los mismos problemas que los índices de array y no se recomienda en la mayoría de los casos.
+- No es necesario que las `key` sean globalmente únicas; sólo deben ser únicas entre los componentes y sus hermanos.
+
+### Finalmente implementamos el viaje en el tiempo
+
+- En el historial del juego, cada jugada pasada tiene un ID único asociado: es el número secuencial de la jugada.
+- Las jugadas nunca se reordenarán, eliminarán o insertarán en el medio, por lo que es seguro utilizar el índice de la jugada como clave.
+- Antes de que podamos implementar la función `jumpTo`, necesitamos que el componente `Game` lleve la cuenta del paso que el usuario está viendo en ese momento.
+- Para esto vamos a definir una nueva variable de estado llamada `currentMove` con el valor por defecto de 0.
+
+```javascript
+export default function Game() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [currentMove, setCurrentMove] = useState(0);
+
+  // Resto del código del componente
+}
+```
+
+- A continuación, actualizamos la función `jumpTo` dentro del componente Game para actualizar ese `currentMove`.
+- También establecemos `xIsNext` a `true` si el número al que está cambiando `currentMove` es par.
+- Ahora vamos a hacer dos cambios a la función `handlePlay` del Game que es llamada cuando se presiona en una casilla.
+- Si hay que `retrocedes en el tiempo` y luego hacer un nuevo movimiento desde ese punto, sólo queremos mantener la historia hasta ese punto.
+- En lugar de añadir `nextSquares` después de todos los ítems `(... spread syntax)` en la historia, lo agregamos después de todos los ítems en `history.slice(0, currentMove + 1)` para que sólo mantenga esa porción de la historia antigua.
+- Cada vez que se realiza un movimiento, es necesario actualizar `currentMove` para que apunte a la última entrada del historial.
+- Por último, modificará el componente Juego para renderizar la jugada seleccionada en ese momento, en lugar de renderizar siempre la jugada final:
+
+```javascript
+// cambiamos
+const currentSquares = history[history.length - 1];
+
+// Por
+const currentSquares = history[currentMove];
+```
+
+- Ahora si presionas en cualquier paso del historial del juego, el tablero debería actualizarse inmediatamente para mostrar el estado que tenía el tablero después de que se produjera ese paso.
+
+#### Limpieza final
+
+- Si miramos el código muy de cerca, podemos notar que `xIsNext === true` cuando `currentMove` es par y `xIsNext === false` cuando `currentMove` es impar. En otras palabras, si conoces el valor de currentMove, siempre puedes averiguar cuál debería ser xIsNext.
+- No hay razón para guardar ambos valores en el estado. De hecho, siempre trata de evitar el estado redundante.
+- Simplificar lo que guardamos en el estado reduce los errores y hace que tu código sea más fácil de entender.
+- Cambiamos en el componente Game para que no se guarde `xIsNext` como una variable de estado separada y en su lugar lo calcule basándose en `currentMove`.
+
+```javascript
+export default function Game() {
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [currentMove, setCurrentMove] = useState(0);
+  const xIsNext = currentMove % 2 === 0;
+  const currentSquares = history[currentMove];
+
+  const onRestartHandler = () => {
+    setCurrentMove(0);
+    setHistory([Array(9).fill(null)]);
+  };
+
+  function jumpTo(nextMove) {
+    setCurrentMove(nextMove);
+  }
+  // Resto del código del componente
+}
+```
+
+- Ya no necesitamos la variabel de estado `xIsNext` ni la función a `setXIsNext`.
+- Ahora, no hay posibilidad de que xIsNext se desincronice con currentMove, incluso si cometes un error al codificar los componentes.
+
+### Para terminar
+
+- ¡Felicitaciones! creaste un juego de Tic Tact Toe / Ta Te Ti / Tres en raya!
+- Permite jugar al Tic Tac Toe.
+- Indica cuando un jugador ha ganado la partida.
+- Guarda el historial de una partida a medida que ésta avanza.
+- Permite a los jugadores revisar el historial de una partida y ver versiones anteriores del tablero.
+
+Excelente trabajo. Espero que ahora sientas que entiendes mejor cómo funciona React.
+
+![Fiesta de codeo](https://giphy.com/gifs/microsoft-party-time-bill-gates-l3q2zbskZp2j8wniE)
