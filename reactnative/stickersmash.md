@@ -24,6 +24,21 @@
 - Estos temas proporcionan una base para aprender los fundamentos creando una aplicación Expo.
 - Este tutorial está dividido en nueve capítulos.
 - Cada capítulo contiene el código necesarios para completar los pasos, así que puedes seguirlo creando una aplicación desde cero.
-- Antes de empezar, echa un vistazo a lo que vamos a construir. Es una aplicación llamada StickerSmash que funciona en Android, iOS y la web:
+- Antes de empezar, echa un vistazo a lo que vamos a construir. Es una aplicación llamada [StickerSmash que funciona en Android, iOS y la web](https://docs.expo.dev/static/videos/tutorial/final.mp4)
 
-https://docs.expo.dev/static/videos/tutorial/final.mp4
+### Crear la app
+
+- Usamos `create-expo-app` para crear una nueva Expo app con el nombre `StickerSmash`
+
+```bash
+npx create-expo-app@latest StickerSmash && cd StickerSmash
+```
+
+- Este template tiene el código esencial y las librerías necesarias para construir nuestra aplicación, incluyendo Expo Router.
+- Ventajas de utilizar el template por defecto:
+  - Crea un nuevo proyecto React Native con el paquete expo instalado.
+  - Incluye herramientas recomendadas como Expo CLI.
+  - Incluye un navegador de Tabs de Expo Router.
+  - Configurado automáticamente para ejecutar un proyecto en múltiples plataformas: `Android, iOS y web`.
+  - TypeScript viene configurado por defecto.
+- [Descarga los assets](../assets/react-native/sticker-smash-assets.zip) iniciales que vamos a utilizar a lo largo del tutorial.
