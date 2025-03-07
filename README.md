@@ -78,15 +78,10 @@
 - [Flexbox Froggy en Español](https://flexboxfroggy.com/#es)
 - [Tarjeta Personal](reactnative/tarjetapersonal.md)
 - [Ta Te Ti](reactnative/tictactoe.md)
-
-<!--
-- [Pensando en React](reactnative/pensandoenreact.md)
-  -->
-
+- [Ta Te Ti](reactnative/tictactoe.md)
+- [StickerSmash - Expo](reactnative/stickersmash.md)
 <!--
 Tutoriales de Expo
-
-
 - Expo tutorial
 - EAS tutorial
 - Push notification
