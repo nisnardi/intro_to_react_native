@@ -1574,7 +1574,7 @@ export default function Index() {
   };
 
   const onSaveImageAsync = async () => {
-    // we will implement this later
+    // Vamos a implementar esto después
   };
 
   return (
@@ -1611,7 +1611,7 @@ export default function Index() {
         </View>
       )}
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
-        {/* A list of emoji component will go here */}
+        {/* Vamos a mostrar una lista de emojis */}
       </EmojiPicker>
     </View>
   );
@@ -1712,4 +1712,439 @@ const styles = StyleSheet.create({
 - La propiedad `horizontal` muestra la lista horizontalmente en lugar de verticalmente.
 - La propiedad `showsHorizontalScrollIndicator` se utiliza para mostrar o ocutlar la barra de scrool. En este caso debemos utilizar el módulo `Platform` de React Native para comprobar si al app está corriendo en web.
 - Finalmente actualizamos el componente `app/(tabs)/index.tsx` para importar el componente `EmojiList`.
-  y reemplaza los comentarios dentro del componente <EmojiPicker> con el siguiente fragmento de código:
+
+```javascript
+// Importamos el tipo de dato ImageSource del módulo expo-image
+import { type ImageSource } from "expo-image";
+
+// Importamos el nuevo componente
+import EmojiList from "@/components/EmojiList";
+
+// Creamos una nueva variable de estado que se llama pickedEmoji
+type PickedEmoji = ImageSource | undefined;
+const [pickedEmoji, setPickedEmoji] = useState < PickedEmoji > undefined;
+
+// Utilizamos el componente pasando la función setPickedEmoji como callback y onModalClose para saber cuando se cerró el Modal.
+<EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />;
+```
+
+- En el componente `EmojiList`, la propiedad `onSelect` selecciona el emoji y después de seleccionarlo, el `onCloseModal` cierra el modal.
+- El componente index debería estar así:
+
+```javascript
+import { View, StyleSheet } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useState } from "react";
+
+import { type ImageSource } from "expo-image";
+
+import Button from "@/components/Button";
+import ImageViewer from "@/components/ImageViewer";
+import IconButton from "@/components/IconButton";
+import CircleButton from "@/components/CircleButton";
+import EmojiPicker from "@/components/EmojiPicker";
+
+import EmojiList from "@/components/EmojiList";
+
+const PlaceholderImage = require("@/assets/images/background-image.png");
+
+export default function Index() {
+  const [selectedImage, setSelectedImage] =
+    (useState < string) | (undefined > undefined);
+  const [showAppOptions, setShowAppOptions] = useState < boolean > false;
+  const [isModalVisible, setIsModalVisible] = useState < boolean > false;
+  const [pickedEmoji, setPickedEmoji] =
+    (useState < ImageSource) | (undefined > undefined);
+
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri);
+      setShowAppOptions(true);
+    } else {
+      alert("You did not select any image.");
+    }
+  };
+
+  const onReset = () => {
+    setShowAppOptions(false);
+  };
+
+  const onAddSticker = () => {
+    setIsModalVisible(true);
+  };
+
+  const onModalClose = () => {
+    setIsModalVisible(false);
+  };
+
+  const onSaveImageAsync = async () => {
+    // Vamos a agregar esto después
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <ImageViewer
+          imgSource={PlaceholderImage}
+          selectedImage={selectedImage}
+        />
+      </View>
+      {showAppOptions ? (
+        <View style={styles.optionsContainer}>
+          <View style={styles.optionsRow}>
+            <IconButton icon="refresh" label="Reset" onPress={onReset} />
+            <CircleButton onPress={onAddSticker} />
+            <IconButton
+              icon="save-alt"
+              label="Save"
+              onPress={onSaveImageAsync}
+            />
+          </View>
+        </View>
+      ) : (
+        <View style={styles.footerContainer}>
+          <Button
+            theme="primary"
+            label="Choose a photo"
+            onPress={pickImageAsync}
+          />
+          <Button
+            label="Use this photo"
+            onPress={() => setShowAppOptions(true)}
+          />
+        </View>
+      )}
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+      </EmojiPicker>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#25292e",
+    alignItems: "center",
+  },
+  imageContainer: {
+    flex: 1,
+  },
+  footerContainer: {
+    flex: 1 / 3,
+    alignItems: "center",
+  },
+  optionsContainer: {
+    position: "absolute",
+    bottom: 80,
+  },
+  optionsRow: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+});
+```
+
+#### Mostrar el emoji seleccionado
+
+- Ahora, podemos poner el emoji en la imagen.
+- Para esto vamos a crear un nuevo archivo en la carpeta `components` con el nombre `EmojiSticker.tsx`.
+- Le agregamos el siguiente código:
+
+```javascript
+import { View } from "react-native";
+import { Image, type ImageSource } from "expo-image";
+
+type Props = {
+  imageSize: number,
+  stickerSource: ImageSource,
+};
+
+export default function EmojiSticker({ imageSize, stickerSource }: Props) {
+  return (
+    <View style={{ top: -350 }}>
+      <Image
+        source={stickerSource}
+        style={{ width: imageSize, height: imageSize }}
+      />
+    </View>
+  );
+}
+```
+
+- Este componente recibe dos propiedades:
+  - `imageSize`: es un valor que vamos a usar para escalar el tamaño de la imagen al tocarla.
+  - `stickerSource`: es la ruta de la imagen emoji seleccionada.
+- Importamos este componente en el componente `app/(tabs)/index.tsx` y actualizamos el componente `Index` para que muestre el emoji en la imagen.
+- Comprobaremos que el estado `pickedEmoji` no sea `undefined`.
+
+```javascript
+// Importamos el nuevo componente
+import EmojiSticker from "@/components/EmojiSticker";
+
+// Validamos que pickedEmoji tenga un valor y luego mostramos el componente EmojiSticker luego de ser seleccionado
+{
+  pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />;
+}
+```
+
+- Excelente, creamos con éxito el selector de emoji e implementamos la lógica para seleccionar un emoji y mostrarlo sobre la imagen!!!!
+- Ahora podemos agregar que el usuario pueda posicionar el emoji en otro lugar de la imágen y cambiar su tamaño.
+
+### Añadir gestos
+
+- Los gestos (gestures) son una gran manera de agregar una experiencia de usuario intuitiva en una aplicación.
+- El módulo [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/) nos da componentes nativos que pueden gestionar gestos.
+- Reconoce movimientos de paneo, toque, rotación y otros gestos usando el sistema de manejo táctil nativo de la plataforma.
+- Vamos a agregar dos gestos diferentes usando esta librería.
+  - Doble toque para escalar el tamaño del emoji y reducir la escala cuando se vuelve a dar un doble toque.
+  - Desplazamiento para mover el emoji por la pantalla de modo que el usuario pueda colocarla en cualquier lugar de la imagen.
+- También utilizaremos este módulo Reanimated para animar entre estados gestuales.
+
+#### Agregar GestureHandlerRootView
+
+- Para que los gesture funcionen en la app, tenemos que renderizar un componente llamado `GestureHandlerRootView` de `react-native-gesture-handler` en la parte superior del componente `Index`.
+- Tiene que ser el padre del resto de los componentes que pueden utilizar gestures.
+- Cambiamos el componente `View` del nivel raíz en `app/(tabs)/index.tsx` por `GestureHandlerRootView`.
+
+```javascript
+// Importamos el componente que queremos utilizar
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+
+// Cambiamos el View por GestureHandlerRootView para que sea el padre de nuestros componentes.
+return (
+  <GestureHandlerRootView style={styles.container}>
+    {/* ...el resto del código queda igual */}
+  </GestureHandlerRootView>
+);
+```
+
+- Listo, con este cambio podemos usar gestures en nuestros componentes.
+
+#### Utilizar componentes animados
+
+- `react-native-reanimated` es otro módulo que nos permite agregar y manejar animaciones.
+- Este módulo le agrega funcionalidad a React Native en un campo donde no era muy bueno.
+- Para aprender más sobre [react-native-reanimated mirando los docs oficiales](https://docs.swmansion.com/react-native-reanimated/).
+- `react-native-reanimated` nos da unos componentes animados que podemos utilizar en nuestra aplicación.
+- Un componente `Animated` mira la propiedad de estilo del componente y determina qué valores animar y que actualizaciones aplicar para crear una animación.
+- Reanimated exporta componentes animados como `<Animated.View>`, `<Animated.Text>`, o `<Animated.ScrollView>`.
+- Podemos ver que son similares a los componentes de React Native básicos pero con la posibilidad de animarlos.
+- Aplicaremos animaciones al componente `<Animated.Image>` para que funcione un gesto de doble toque.
+- Abrimos el componente `EmojiSticker.tsx` que está en la carpeta `components`. - Importamos `Animated` de la librería `react-native-reanimated` para utilizar componentes animados.
+- Cambiamos el componente `Image` por `Animated.Image`.
+
+```javascript
+// components/EmojiSticker.tsx
+
+// Importamos Animated
+import Animated from "react-native-reanimated";
+
+// Cambiamos Image por Animated.Image
+<Animated.Image
+  source={stickerSource}
+  resizeMode="contain"
+  style={{ width: imageSize, height: imageSize }}
+/>;
+```
+
+#### Agregar el gesture tap
+
+- React Native Gesture Handler nos permite añadir comportamiento cuando detecta algún input táctil, como un evento de doble tap.
+- Vamos a modificar el componente EmojiSticker.tsx.
+  - Importamos `Gesture` y `GestureDetector` de `react-native-gesture-handler`.
+  - Para reconocer el tab en el emoji, importamos `useAnimatedStyle`, `useSharedValue` y `withSpring` de `react-native-reanimated` para animar el estilo del componente `Animated.Image`.
+  - Dentro del componente `EmojiSticker`, creamos una `referencia` llamada `scaleImage` usando el hook `useSharedValue`. Toma el valor de `imageSize` como valor inicial.
+- Apliquemos estos cambios:
+
+```javascript
+// components/EmojiSticker.tsx
+
+// Importamos Gesture y GestureDetector
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
+
+// Importamos useAnimatedStyle, useSharedValue y withSpring
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
+
+// Creamos una nueva variable con el nombre scaleImage y le asignamos el valor de retorno que nos da `useSharedValue`
+const scaleImage = useSharedValue(imageSize);
+```
+
+- JavaScript tiene un single thread lo cual significa que puede hacer operaciones utilizando sólo un thread.
+- Al usar animaciones en general se puede saturar el uso de este thread por actualizaciones constantes y ahí es donde React Native no puede mostrar o usar animaciones más complejas porque bloquea el thear con las animaciones y el resto de las operaciones no se realizan como corresponde dando una imágen de que la app está bloqueada o no responde.
+- Reanimated usa el concepto de thread de JavaScript pero también utiliza un thread para UI.
+- [useSharedValue](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/glossary#shared-value) crea un valor que puede ser compartido entre el thead de JavaScript y UI para de esta manera poder animar valores y no bloquear la ejecución del código JavaScript.
+- Reanimated mantinene en sync los valores compartidos entre ambos thread!.
+- Creamos un valor compartido utilizando el hook `useSharedValue` tiene muchas ventajas.
+- Ayuda a mutar datos y ejecuta animaciones basadas en el valor actual.
+- Podemos acceder y modificar el valor compartido utilizando la propiedad `value`.
+- Ahora que sabemos como funciona podemos utilizarlo:
+  - Crearemos un objeto `doubleTap` para escalar el valor inicial y utilizaremos `Gesture.Tap` para animar la transición mientras escalamos la imagen del sticker.
+  - Para determinar el número de toques necesarios, añadiremos `numberOfTaps`.
+- Crea el siguiente objeto en el componente `EmojiSticker`:
+
+```javascript
+//components/EmojiSticker.tsx
+
+const doubleTap = Gesture.Tap()
+  .numberOfTaps(2)
+  .onStart(() => {
+    if (scaleImage.value !== imageSize * 2) {
+      scaleImage.value = scaleImage.value * 2;
+    } else {
+      scaleImage.value = Math.round(scaleImage.value / 2);
+    }
+  });
+```
+
+- Para animar la transición, vamos a utilizar una animación basada en spring.
+- Esto hace que se sienta vivo, ya que se basa en la física del mundo real de un resorte.
+- Usamos la función `withSpring` que nos da por `react-native-reanimated`.
+- `Gesture.Tap()` permite controlar o manejar los Tap que se le hacen a un componente.
+- `.numberOfTaps(2)` configura que vamos a utilizar 2 taps para disparar este evento.
+- `.onStart` es un manejador de evento para saber cuando comienza el evento tap.
+- esta función acepta un callback como parámetro con el código que queremos ejecutar cuando se hace tap en un componente.
+
+```javascript
+if (scaleImage.value !== imageSize * 2) {
+  scaleImage.value = scaleImage.value * 2;
+} else {
+  scaleImage.value = Math.round(scaleImage.value / 2);
+}
+```
+
+- `scaleImage.value` es la forma de obtener el valor real compartido entre los dos threads `UI y JS` pero el objeto compartido es `scaleImage` que creamos cuando llamamos a `useSharedValue`.
+- Validamos si el valor compartido es distinto que el tamaño de la imágen por 2, es decir estamos controlando si la imágen tiene un tamaño diferente que el doble de la imagen original.
+- Si la condición es verdadera significa que no tiene el doble de valor entonces podemos asignar un nuevo valor multiplicando `scaleImage.value * 2` para incrementar el valor en 2.
+- Si la condición es negativa entonces significa que ya está al doble de su tamaño y podemos hacer la inversa mediante dividir el valor compartido por dos `scaleImage.value = Math.round(scaleImage.value / 2)`.
+- En el sticker de emojo podemos usar el hook `useAnimatedStyle` para crear un objeto de estilo.
+- Este objeto de estilo nos ayuda a actualizar los estilos utilizando valores compartidos cuando se produzca la animación.
+- También escalaremos el tamaño de la imagen manipulando las propiedades `width y height`.
+- Los valores iniciales de estas propiedades se establecen en `imageSize`.
+
+```javascript
+// components/EmojiSticker.tsx
+
+const imageStyle = useAnimatedStyle(() => {
+  return {
+    width: withSpring(scaleImage.value),
+    height: withSpring(scaleImage.value),
+  };
+});
+```
+
+- En este código creamos una nueva variable que es un objeto de estilo como el que creamos usando StyleSheet pero está controlado por la animación que queremos utilizar.
+- Definimos las propiedades width y height y le asignamos un número.
+- Este número va a cambiar a lo largo del tiempo cuando se ejecute una animación.
+- La animación está definida por el cambio de valor del objeto `scaleImage` y su propiedad `value`.
+- Usamos `withSring` para hacer que el cambio de valor sea animado usando este efecto de resorte para que la animación se vea un poco más linda.
+- El tamaño inicial del emoji está dado por lo que establecimos en el estilo del componente Animate.image: `style={{ width: imageSize, height: imageSize }}` donde definimos que sería un cuadrado donde height y width tienen el tamaño definido en la propiedad imageSize.
+- Con todo este código sumado al manejo de tap lo que hicimos fue crear un valor compartido que vamos a modificar su valor por medio del evento doble tap.
+- Cuando el valor compartido cambia de valor entonces useAnimatedStyle va a detectar ese cambio de valor y reaccionar cambiando el valor de ancho y alto.
+- Por cada cambio usa una función matemática para hacer que el valor cambie el ancho y alto del componente.
+- Ahora nos queda hacer dos cosas, por un lado agregar un componente que use el código de manejo de tap y por otro lado usar el estilo para decirle al componente animado que reaccione al cambio de estilo:
+
+```javascript
+// Usamos el componente GestureDetector para detectar un gesture. En este caso es doble tap.
+<GestureDetector gesture={doubleTap}></GestureDetector>
+
+// Agregamos el estilo controlado por la animación para que cambie de valor.
+<Animated.Image
+  source={stickerSource}
+  resizeMode="contain"
+  style={[imageStyle, { width: imageSize, height: imageSize }]}
+/>
+```
+
+- Ahora al hacer doble tap sobre un emoji que está sobre la imagen ejecuta una animación para cambiar de tamaño al doble de su tamaño original y lo hace con una animación medio que rebotando como si fuera un resorte.
+- Al hacer doble tap nuevamente el emoji vuelve a su tamaño original.
+- Podes leer la documentación sobre el [Gesture Tap de la guía oficial](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/tap-gesture/).
+
+#### Agregar pan gesture
+
+- Para reconocer un gesto donde el usuario arrastra el sticker y seguir su movimiento podemos utilizar un gesture llamado `pan`.
+- Modificamos el componente `components/EmojiSticker.tsx`.
+
+```javascript
+// Agregamos dos shared values para la posición de X y de Y con un valor inicial en 0.
+const translateX = useSharedValue(0);
+const translateY = useSharedValue(0);
+
+// Agreganos otro componente animado para manejar el cambio de posición. En este caso es una View animada.
+<Animated.View style={{ top: -350 }}>
+  <GestureDetector gesture={doubleTap}>
+    {/* ...Resto del código */}
+  </GestureDetector>
+</Animated.View>;
+```
+
+- Los valores de X e Y se usan para mover el emoji por la pantalla.
+- Como se mueve a lo largo de ambos ejes, necesitamos seguir los valores X e Y.
+- Usando el hook `useSharedValue` establecimos ambas variables de traslación para que tengan una posición inicial de 0.
+- Esta es la posición inicial del emoji y un punto de partida.
+- Este valor establece la posición inicial del sticker cuando se inicia el gesto.
+- En el paso anterior establecimos el event handler de `onStart` para el gesture tap encadenado al método `Gesture.Tap`.
+- Para el gesto panorámico, especificamos una función para manejar `onChange` que se ejecuta cuando el gesto está activo y en movimiento.
+- Para lograr este cambioe tenemos que crear un objeto `drag` para gestionar el gesto de desplazamiento.
+- `onChange` acepta un evento como parámetro.
+- Las propiedades `changeX` y `changeY` contienen el cambio de posición desde el último evento y actualizan los valores almacenados en `translateX` y `translateY`.
+- Definimos el objeto `containerStyle` usando el hook `useAnimatedStyle`.
+- Este nuevo objeto tiene un array de transformaciones.
+- Necesitamos establecer la propiedad transform a los valores `translateX` y `translateY` del componente `Animated.View`.
+- Esto cambiará la posición del emoji cuando el gesto esté activo.
+
+```javascript
+// components / EmojiSticker.tsx;
+
+// Creamos un nuevo manejador de gesture que maneja el `Pan`. Cuando cambia se llama al callback para cambiar los valores y así actualizando los valores compartidos de translateX y translateY.
+const drag = Gesture.Pan().onChange((event) => {
+  translateX.value += event.changeX;
+  translateY.value += event.changeY;
+});
+
+// Creamos una animación donde transformamos las propiedades de translateX y translateY
+const containerStyle = useAnimatedStyle(() => {
+  return {
+    transform: [
+      {
+        translateX: translateX.value,
+      },
+      {
+        translateY: translateY.value,
+      },
+    ],
+  };
+```
+
+- La propiedad de estilo `transform` permite transformar algunos valores de estilo en 2D o 3D.
+- Esto es propio de React Native y podes leer más sobre este tema en la [documentación oficial](https://reactnative.dev/docs/transforms).
+- Ahora tenemos que utilizar el nuevo gesture y estilo animado:
+
+```javascript
+// components/EmojiSticker.tsx
+
+// Agregamos otro componente GestureDetector que ahora detecta el gesture pan.
+<GestureDetector gesture={drag}></GestureDetector>
+
+// Tenemos que agregar el estilo animado que modifique la posición del componente Animated.View
+<Animated.View style={[containerStyle, { top: -350 }]}>
+```
+
+- Ahora al agregar un sticker de emoji podemos hacerle doble tap para que cambie de tamaño.
+- También podemos mantener apretado el sticker emoji y arrastrarlo para que se anime la propiedad `X e Y` y de esta forma podermover el componente sobre la foto.
+- Al soltar el sticker en algún lado queda con el último valor y de esta forma está fijo hasta que lo volvamos a mover.
+- En sintesis vamos a definir gestures como tap y pan para poder utilizarlos con un GestureDetector.
+- Usamos shared values para compartir valores entre el thread de JS y UI para que no bloquear el thread de JavaScript mientra ejecutamos animaciones.
+- Al cambiar los valores compartidos por parte de la animación podemos utilzar estos valors para actualizar un estilo de un componente y por ende lograr una animación.
+- [React Native tiene su propio framework](https://reactnative.dev/docs/animations) de animación pero es medio limitado.
+- Excelente ahora manejamos los gesture Tap y Pan, gran trabajo y todo lo que aprendimos hasta acá!
