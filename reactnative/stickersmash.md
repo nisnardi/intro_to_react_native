@@ -2342,3 +2342,71 @@ declare module "dom-to-image";
 - Increible, la aplicación hace todo lo que nos habíamos propuesto, así que es hora de centrarnos en lo puramente estético...
 
 ### Configura la barra de estado, la pantalla de inicio y el icono de la aplicación
+
+- `expo-status-bar` viene preinstalado en todos los proyectos creados con `create-expo-app`.
+- Esta módulo proporciona un componente `StatusBar` para configurar el estilo de la barra de estado de la aplicación.
+- Importams `StatusBar` de `expo-status-bar` en de `app/_layout.tsx`.
+- Luego agrupamos el componente `StatusBar` y los componentes `Stack` existentes usando un componente [Fragment de React](https://react.dev/reference/react/Fragment).
+
+```javascript
+// app/_layout.tsx
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+
+export default function RootLayout() {
+  return (
+    <>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style="light" />
+    </>
+  );
+}
+```
+
+- Al reiniciar la app se debería ver los indicadores (batería, hora) de color blanco o más claros que antes dado que utilizamos `StatusBar` con el style `light`.
+- Podemos utilizar `dark` cuando el fondo de la app es claro.
+
+#### ICono de la App
+
+- Dentro del proyecto, hay un archivo `icon.png` dentro de la carpeta `assets/images`.
+- Este es el icono de nuestra aplicación.
+- Es una imagen de `1024px por 1024px`.
+- Al igual que la Splash screen (pantalla de Bienvenida), la propiedad `icon` del archivo `app.json` configura la ruta del icono de la aplicación.
+- Por defecto, un nuevo proyecto Expo define la ruta correcta a `./assets/images/icon.png` y no tenemos que cambiar nada.
+- Si usamos el servicio de Expo Application Service (EAS) toma el icono y genera diferentes versiones al publicar la app.
+- Se puede ver el icono en varios lugares de Expo Go.
+- Este es un ejemplo del icono de la aplicación que aparece en el menú de desarrolladores de Expo Go.
+
+![Icono en Expo Go](../assets//react-native/app-icon-visible.png)
+
+#### Splash screen
+
+- Splash screen es una pantalla visible antes de que se cargue el contenido de la aplicación.
+- Utiliza una imagen más pequeña, como el icono de una aplicación, que está centrada.
+- Se oculta una vez que el contenido de la aplicación está listo para mostrarse.
+- El plugin [expo-splash-screen](https://docs.expo.dev/versions/latest/sdk/splash-screen/) ya viene preinstalado en todos los proyectos creados con `create-expo-app`.
+- Este modulo proporciona un plugin config para configurar la pantalla de bienvenida.
+- En `app.json`, el plugin `expo-splash-screen` ya está configurado para utilizar el icono de la app como imagen de la pantalla de bienvenida, por lo que no tenemos que cambiar nada,
+
+```json
+// app.json
+{
+  "plugins": [
+    [
+      "expo-splash-screen",
+      {
+        "image": "./assets/images/splash-icon.png"
+      }
+    ]
+  ]
+}
+```
+
+- Sin embargo, para probar el Splash Screen, no podemos utilizar `Expo Go` o compilar para desarrollo.
+- Para poder probarlo, tenemos que crear una vista previa o una compilación de producción de nuestra aplicación.
+- ¡Bien hecho! Creamos una aplicación que funciona en Android, iOS y la Web desde el mismo código fuente.
+
+![Festejo](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHN5ZWtuamk5MHAwZHc0eWNnOXdkaDBkdHpxYjE2MDI2Ym9yamhycCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yoJC2GnSClbPOkV0eA/giphy.gif)
