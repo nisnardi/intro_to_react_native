@@ -2148,3 +2148,197 @@ const containerStyle = useAnimatedStyle(() => {
 - Al cambiar los valores compartidos por parte de la animación podemos utilzar estos valors para actualizar un estilo de un componente y por ende lograr una animación.
 - [React Native tiene su propio framework](https://reactnative.dev/docs/animations) de animación pero es medio limitado.
 - Excelente ahora manejamos los gesture Tap y Pan, gran trabajo y todo lo que aprendimos hasta acá!
+
+### Captura de pantalla
+
+- En esta seción vamos a aprender como tomar una captura de pantalla utilizando un módulo de terceros y guardarla en la biblioteca multimedia del dispositivo. - Vamos a usar `react-native-view-shot` para tomar una captura de pantalla y `expo-media-library` para guardar una imagen en la biblioteca multimedia del dispositivo.
+- Podemos buscar más módulos de terceros utilizando el [directorio de módulos de React Native](https://reactnative.directory).
+
+#### Instalar los módulos necesarios
+
+- Ejecutamos el siguiente comando para instalar `react-native-view-shot` y `expo-media-library`:
+
+```bash
+npx expo install react-native-view-shot expo-media-library
+```
+
+### Pedir Permiso
+
+- Una aplicación que requiere información sensible, como el acceso a la biblioteca multimedia de un dispositivo, tiene que pedir permiso para permitir o denegar el acceso.
+- Usando el hook `usePermissions` de `expo-media-library`, podemos comprobar el estado del permiso y el método `requestPermission` para pedir acceso.
+- Cuando la aplicación se carga por primera vez y el estado del permiso no es ni concedido ni denegado significa que es null.
+- Cuando se pide permiso, el usuario puede concederlo o denegarlo.
+- Podemos añadir una condición para comprobar si es null, y si lo es, lanzar el método `requestPermission`.
+- Después de obtener el acceso, el valor del estado cambia a concedido.
+- Agregamos el siguiente código dentro de `app/(tabs)/index.tsx`:
+
+```javascript
+// app/(tabs)/index.tsx
+
+// Importamos MediaLibrary del módulo expo-media-library
+import * as MediaLibrary from "expo-media-library";
+
+// Usamos MediaLibrary.usePermissions para ver el estado del permiso que necesitamos utilizar y lo guardamos en la variable status
+const [status, requestPermission] = MediaLibrary.usePermissions();
+
+// Si el estado está en null significa que nunca se pidió permiso para estoy debemos pedirlo
+if (status === null) {
+  requestPermission();
+}
+```
+
+![Permiso](../assets/react-native/permiso.png)
+
+- La forma de pedir permiso cambia entre sistemas operativos pero estos módulos se encargan de manejarlo por nosotros para crear una mejor experiencia al utilizarlo.
+- Una vez que el usuario nos dio su permiso podemos seguir adelante.
+
+#### Guardar la vista actual
+
+- Para tomar el screenshot vamos a utilizar `react-native-view-shot`.
+- Este módulo captura la pantalla de una `View` como una imagen usando el método `captureRef`.
+- Devuelve la `URI` del archivo de imagen de la captura de pantalla.
+- Para poder utilizarlo vamos a importa `captureRef` de `react-native-view-shot` y `useRef` de React.
+- Creamos una variable de `referencia imageRef` para almacenar la referencia de la imagen capturada.
+  -Utilizamos los componentes `ImageViewer` y `EmojiSticker` dentro de un `View` y pásale la variable de referencia.
+
+```javascript
+// app/(tabs)/index.tsx
+
+// Importamos useRef
+import { useState, useRef } from "react";
+
+// Importamos el módulo que permite la captura de pantalla
+import { captureRef } from "react-native-view-shot";
+
+// Creamos una referencia que se pueda utilizar en la vista y decirle al módulo que haga la captura.
+const imageRef = useRef < View > null;
+
+// Usamos una View con la referencia para decirle al módulo que tiene que capturar.
+<View ref={imageRef} collapsable={false}>
+  <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
+  {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+</View>;
+```
+
+- La propiedad `collapsable` está establecida en false.
+- Esto permite que el componente `View` haga una captura de pantalla sólo de la imagen de fondo y del sticker emoji.
+
+#### Capturar una pantalla y guardarla
+
+- Podemos capturar una pantalla de la vista llamando al método `captureRef` de `react-native-view-shot` dentro de la función `onSaveImageAsync`.
+- Esta función acepta un parámetro opcional donde podemos pasar el ancho y alto del área de captura de pantalla.
+- El método `captureRef` también devuelve una promise que se cumple con la `URI` de la captura de pantalla.
+- Pasaremos esta `URI` como parámetro a `MediaLibrary.saveToLibraryAsync` y guardaremos la captura de pantalla en la biblioteca multimedia del dispositivo.
+- Dentro del componente `app/(tabs)/index.tsx` actualizamos la función `onSaveImageAsync` con el siguiente código.
+
+```javascript
+// app/(tabs)/index.tsx
+const onSaveImageAsync = async () => {
+  try {
+    const localUri = await captureRef(imageRef, {
+      height: 440,
+      quality: 1,
+    });
+
+    await MediaLibrary.saveToLibraryAsync(localUri);
+    if (localUri) {
+      alert("Saved!");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+```
+
+- Ahora, elige una foto y añade un sticker de emoji en la aplicación.
+- A continuación, toca el botón `Save`.
+- Deberás ver un mensaje que la foto fué salvada con éxito o un error en la consola.
+- Si bien todo hasta acá está muy bien, todavía no podemos salvar la captura de pantalla en Web.
+- Este es un problema común en aplicaciones Universales donde tenemos que considerar más opciones a la hora de soportar diferentes plataformas.
+
+### Manejamos las diferencias entre plataformas
+
+- Android, iOS y la web tienen diferentes capacidades.
+- En nuestro caso, tanto Android como iOS pueden capturar una pantalla con el módulo `react-native-view-shot`. Sin embargo, los navegadores web no pueden.
+- En esta sección vamos a aprender a capturar la pantalla para navegadores web de forma que nuestra aplicación tenga la misma funcionalidad en todas las plataformas.
+
+#### Instalar e importar dom-to-image
+
+- Para capturar una pantalla en la web y guardarla como imagen, utilizaremos un módulo de terceros llamado `dom-to-image`.
+- Este módulo toma una captura de pantalla de cualquier nodo DOM y la convierte en una imagen vectorial (SVG) o rasterizada (PNG o JPEG).
+- Ejecutamos el siguiente comando para instalar el nuevo módulo:
+
+```bash
+$ npm install dom-to-image
+```
+
+- Corremos el servidor de Expo / Metro de nuevo y presionamos W para ver nuestra app en web.
+
+#### Agregamos código específico para web
+
+- Usamos el módulo `Platform` de React Native para implementar un comportamiento específico según la plataforma donde se corre nuestra aplicación.
+- Modificamos `app/(tabs)/index.tsx` para importar el módulo `Platform` de `react-native`.
+- Importamos la librería `domtoimage` desde `dom-to-image`.
+- Actualizmos la función `onSaveImageAsync` para comprobar si la plataforma actual es `'web'` con la propiedad `Platform.OS`.
+- Si es 'web', usaremos el método `domtoimage.toJpeg` para convertir y capturar la `Vista` actual como una imagen JPEG.
+- En caso contrario, seguiremos usando la misma lógica añadida para plataformas nativas.
+
+```javascript
+// app/(tabs)/index.tsx
+
+// Importamos Platform de React Native
+import { View, StyleSheet, Platform } from "react-native";
+
+// Importamos el módulo domtoimage
+import domtoimage from "dom-to-image";
+
+// Modificamos la función onSaveImageSync para soportar captura de pantalla web
+const onSaveImageAsync = async () => {
+  if (Platform.OS !== "web") {
+    try {
+      const localUri = await captureRef(imageRef, {
+        height: 440,
+        quality: 1,
+      });
+
+      await MediaLibrary.saveToLibraryAsync(localUri);
+      if (localUri) {
+        alert("Saved!");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    try {
+      const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+        quality: 0.95,
+        width: 320,
+        height: 440,
+      });
+
+      let link = document.createElement("a");
+      link.download = "sticker-smash.jpeg";
+      link.href = dataUrl;
+      link.click();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+};
+```
+
+- Con esto agregamos la funcionalidad para que tanto Mobile como Web tengan la misma experiencia.
+- VS Code nos muestra un error de TS en el módulo de dom-to-image.
+- Para solucionar este problema tenemos que crear un archivo de TS donde agregamos una definición para decirle a TS que este es un nuevo módulo.
+- Creamos un archivo con el nombre `types.d.ts` y dentro declaramos el módulo.
+
+```ts
+// types.d.ts
+declare module "dom-to-image";
+```
+
+- Con esto se debería ir el error de TS en VS Code.
+- También ahora podemos salvar la imágen en el browser.
+- Increible, la aplicación hace todo lo que nos habíamos propuesto, así que es hora de centrarnos en lo puramente estético...
+
+### Configura la barra de estado, la pantalla de inicio y el icono de la aplicación
