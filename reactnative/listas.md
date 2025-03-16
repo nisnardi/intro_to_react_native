@@ -1025,6 +1025,7 @@ const styles = StyleSheet.create({
 });
 ```
 
+- Podes aprender más sobre [FlatList leyendo la documentación oficial](https://reactnative.dev/docs/flatlist).
 - Si bien FlatList es un componente que podemos utilizar para muchas cosas tiene sus limitaciones.
 - Existen otras opciones para usar listas virtuales como son [FlashList de Shopify](https://shopify.github.io/flash-list/) y la super nueva lista de [Tanstack List](https://tanstack.com/virtual/latest) que pueden brindar mejor performance que FlatList.
 
@@ -1144,3 +1145,5 @@ const styles = StyleSheet.create({
   stickySectionHeadersEnabled={false}
 />
 ```
+
+- Podes aprender más sobre [SectionList leyendo la documentación oficial](https://reactnative.dev/docs/sectionlist).
