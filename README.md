@@ -79,130 +79,37 @@
 - [Tarjeta Personal](reactnative/tarjetapersonal.md)
 - [Ta Te Ti](reactnative/tictactoe.md)
 - [StickerSmash - Expo](reactnative/stickersmash.md)
+- [Flat List / Section List](reactnative/listas.md)
+
 <!--
 Tutoriales de Expo
-- Expo tutorial
-- EAS tutorial
-- Push notification
-- Expo Router / React Navigation
-- Firebase
-- Local DB
-- Testing
-- Estado con Redux / Zustand
-  https://dev.to/b42/test-your-react-native-app-with-maestro-5bfj
+- Flat List / Section List
+- Navegación
+- Redux / Manejo de estado
+- Fetch
+- useEffect
+- Context
+- Firebase Login
+- Usar la cámara
+- Splash Screen & Icon
+- Como publicar la App -> Expo tutorial
+- Notificaciones
+- Modulo Nativo
+- Accessibilidad
 
--->
-
-<!--
-- [Date](date.md)
-- [Symbol](symbol.md)
-- [Bigint](bigint.md)
-- [Operadores de dispersión y resto](spread.md)
-- [Operador de coalescencia nula (null)](nulll.md)
-- [Bucle For-In](forin.md)
-- [Bucle For-Of](forof.md)
-
-## Gestión del flujo de control
-
-- [Break](break.md)
-- [Continue](continue.md)
-- [Label](label.md)
-
-## Funciones
-
-- [Declaración de función](funcdec.md)
-- [Expresión de función](funexp.md)
-- [Arrow functions](arrowfunc.md)
-- [Parámetros y argumentos](parameters.md)
-- [Parámetros por defecto](defaultpar.md)
-- [Parámetros restantes (Rest)](rest.md)
-- [Sentencias de retorno](return.md)
-
-## Scope
-
-- [Scope Global](globalscope.md)
-- [Scope Local](localscope.md)
-- [Scope en Function](functionscope.md)
-- [Scope de Bloque (let and const)](blockscope.md)
-
-## Hoisting
-
-- [var, let, const](varletconst.md)
-- [Hoisting de una función](funchoist.md)
-
-## Arrow Functions
-
-- [¿Qué son las funciones Arrow Functions?](arrow.md)
-- [Sintaxis básica](basicsyntax.md)
-- [Retorno implícito](imreturn.md)
-- [Contexto de this](context.md)
-
-## Desestructuración (Destructuring)
-
-- [Desestructuración de matrices](arrde.md)
-- [Desestructuración básica](bade.md)
-- [Desestructuración con valores por defecto](destr.md)
-- [Saltar elementos](skip.md)
-- [Desestructuración de objetos](objectde.md)
-
-## JavaScript asíncrono
-
-- [JavaScript asíncrono (async)](asyn.md)
-- [Entender los Callbacks](callbacks.md)
-- [Promesas (Promises)](prom.md)
-- [Uso de funciones asíncronas](asynfunc.md)
-- [Setting Configuración del entorno de desarrollo](setupnne.md)
-
-## Conceptos Fundamentales de React Native:
-
-- [Fundamentos de React Native](react.md)
-- [Diferencias entre React Native y React (Web)](reactweb.md)
 
 ## Componentes Básicos:
 
-- [Componentes Básicos](basiccomponents.md)
-- [View](view.md)
-- [Text](text.md)
-- [Image](image.md)
-- [Button](button.md)
-- [ScrollView](scrollview.md)
-
-## Interacción con el usuario:
-
-- [Interacción con el usuario](userinteraction.md)
-- [TextInput](textinput.md)
-- [Componentes táctiles (Touchable)](touch.md)
-
 ## Listas y desplazamiento:
 
-- [Listas y desplazamiento](listscroll.md)
 - [FlatList](flatlist.md)
 - [SectionList](sectionlist.md)
-
-## JSX y la arquitectura basada en componentes:
-
-- [Conceptos básicos de JSX](jsx.md)
-- [Incrustación de expresiones en JSX](embeddingexpressions.md)
-- [JSX vs. HTML](jsxhtml.md)
-
-## Creando componentes:
-
-- [Creando componentes](creatingcomponents.md)
-- [Componentes funcionales (Function)](functionalcomponents.md)
-- [Componentes de clase (Class)](classcomponents.md)
 
 ## Arquitectura de componentes:
 
 - [Componiendo componentes](ccomp.md)
 - [Ciclo de vida del componente](clife.md)
 - [Hooks para componentes funcion](hookscom.md)
-
-## Estado y propiedades en React Native (State & Props):
-
-- [Estado y propiedades en React Native](stateprop.md)
-- [Pasar y utilizar valoes como props](passprop.md)
-- [Valores de Props por defecto](defaultprop.md)
-- [Tipos de props y validación](propvalid.md)
 
 ## Gestión de estado:
 
@@ -274,45 +181,4 @@ Tutoriales de Expo
 
 - [Firebase Firestore](crudfirestore.md)
 - [Características avanzadas de React Native](advancedreactnative.md)
-
-## Temas avanzados y proyecto final
-
-- [Proyecto Final #1](finalprojectexample.md)
-- [Proyecto Final #2](finalprojectexample2.md)
-
-## Tarea
-
-- [Variables](varhw.md)
-- [Tipos de datos primitivos](pdthw.md)
-- [Tipos de datos complejos](cdthw.md)
-- [Operadores](ohw.md)
-- [Estructuras de control](cshw.md)
-- [Sentencias condicionales](csshw.md)
-- [Bucles](loopshw.md)
-- [Gestión del flujo de control](cfmhw.md)
-- [Funciones](fhw.md)
-- [Scope](scopehw.md)
-- [Hoisting](hoistinghw.md)
-- [Arrow Functions](arrowfunctionshw.md)
-- [Template Literals](tlhw.md)
-- [Desestructuración (Destructuring)](destructuringhw.md)
-- [JavaScript asíncrono](Asynjavascripthw.md)
-- [Conceptos básicos de React Native](rncchw.md)
-- [Componentes básicos](bcomphw.md)
-- [Interacción con el usuario](userinthw.md)
-- [Listas y Scrolling](listscrollhw.md)
-- [JSX y arquitectura basada en componentes](jsxhw.md)
-- [Creación de componentes](createcomphw.md)
-- [Arquitectura de componentes](comparchhw.md)
-- [Estado y propiedades en React Native](statepropshw.md)
-- [Gestión de estado](statemanagehw.md)
-- [Flujo de datos](dataflowhw.md)
-- [Patrones avanzados](advancedpatternshw.md)
-- [Navegación y estilos en React Native](reactnativenavstylehw.md)
-- [Stack Navigator](stacknavhw.md)
-- [Tab Navigator](tabnavhw.md)
-- [Drawer Navigator](drawnavhw.md)
-- [Estilo básico](basicstylinghw.md)
-- [Flexbox para diseño de layouts](flexboxlayouthw.md)
-- [Manejo de entradas de usuario y API's](handlinguserinputhw.md)
--->
+  -->
