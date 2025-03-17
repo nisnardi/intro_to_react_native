@@ -1147,3 +1147,5 @@ const styles = StyleSheet.create({
 ```
 
 - Podes aprender más sobre [SectionList leyendo la documentación oficial](https://reactnative.dev/docs/sectionlist).
+
+![Listas](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeXl5cTc4bGh3cm9oaXdybHF0ZWxpdTV6MTF5a3ZyZmpvandvM216NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0IyeCQxvoWnvFims/giphy.gif)
