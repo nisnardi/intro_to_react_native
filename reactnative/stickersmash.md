@@ -2410,3 +2410,5 @@ export default function RootLayout() {
 - ¡Bien hecho! Creamos una aplicación que funciona en Android, iOS y la Web desde el mismo código fuente.
 
 ![Festejo](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHN5ZWtuamk5MHAwZHc0eWNnOXdkaDBkdHpxYjE2MDI2Ym9yamhycCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yoJC2GnSClbPOkV0eA/giphy.gif)
+
+![App de ejemplo](https://github.com/nisnardi/expo-tutorial)

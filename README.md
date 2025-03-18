@@ -76,23 +76,25 @@
 - [Componentes básicos de React Native](reactnative/componentesbasicosrn.md)
 - [Conceptos Básicos de flexbox](https://developer.mozilla.org/es/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox)
 - [Flexbox Froggy en Español](https://flexboxfroggy.com/#es)
+- [Hooks? Effect? Context? y Fetch?](reactnative/hookseffectcontextfetch.md)
+- [Flat List / Section List](reactnative/listas.md)
+
+## Apps
+
 - [Tarjeta Personal](reactnative/tarjetapersonal.md)
 - [Ta Te Ti](reactnative/tictactoe.md)
 - [StickerSmash - Expo](reactnative/stickersmash.md)
-- [Flat List / Section List](reactnative/listas.md)
+
+<!-- - [Ahora a distribuir y publicar nuestra App](reactnative/eastutorial.md) -->
 
 <!--
 Tutoriales de Expo
-- Flat List / Section List
 - Navegación
 - Redux / Manejo de estado
-- Fetch
-- useEffect
-- Context
 - Firebase Login
 - Usar la cámara
 - Splash Screen & Icon
-- Como publicar la App -> Expo tutorial
+
 - Notificaciones
 - Modulo Nativo
 - Accessibilidad
