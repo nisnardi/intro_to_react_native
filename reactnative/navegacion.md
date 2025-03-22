@@ -866,3 +866,56 @@ const styles = StyleSheet.create({
 - En este caso podemos usar `DrawerActions.toggleDrawer()` del módulo `@react-navigation/native`.
 - Al presionar el botón `Abrir Drawer` lo que hacemos es llamar al navegador y decirle que lance una acción para abrir el Drawer.
 - Como están vinculados `expo-router` con `react-navigation` podemos usarlo de esta forma.
+
+### Sitemap
+
+- Mientras que estamos en modo debug `expo-router` agrega un pantalla con el nombre de `_sitemap` que nos permite navegar a una pantalla que tiene todas las rutas configuradas.
+- Esta features nos es útil para ver como funciona nuestra navegación.
+
+```javascript
+// app/index.tsx
+import { View, StyleSheet, Button } from "react-native";
+import { Link, useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
+
+export default function Index() {
+  const navigation = useNavigation();
+
+  const toggleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
+  return (
+    <View style={styles.container}>
+      <Link href="/about">Navegar a About</Link>
+      <Link href="/settings">Navegar a Settings</Link>
+      <Link href="/modal">Navegar a Modal</Link>
+      <Button title="Abrir Drawer" onPress={toggleDrawer} />
+      <Link href="/_sitemap">Sitemap</Link>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+```
+
+- En caso de no querer utilizarlo lo podemos desabilitar modificando app.json:
+
+```json
+{
+  "plugins": [
+    [
+      "expo-router",
+      {
+        "sitemap": false
+      }
+    ]
+  ]
+}
+```
