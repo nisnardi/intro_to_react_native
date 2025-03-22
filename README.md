@@ -76,7 +76,6 @@
 - [Componentes básicos de React Native](reactnative/componentesbasicosrn.md)
 - [Conceptos Básicos de flexbox](https://developer.mozilla.org/es/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox)
 - [Flexbox Froggy en Español](https://flexboxfroggy.com/#es)
-- [Hooks? Effect? Context? y Fetch?](reactnative/hookseffectcontextfetch.md)
 - [Flat List / Section List](reactnative/listas.md)
 
 ## Apps
@@ -84,6 +83,8 @@
 - [Tarjeta Personal](reactnative/tarjetapersonal.md)
 - [Ta Te Ti](reactnative/tictactoe.md)
 - [StickerSmash - Expo](reactnative/stickersmash.md)
+- [Hooks? Effect? Context? y Fetch?](reactnative/hookseffectcontextfetch.md)
+- [Navegación - Expo Router](reactnative/navegacion.md)
 
 <!-- - [Ahora a distribuir y publicar nuestra App](reactnative/eastutorial.md) -->
 
