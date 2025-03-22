@@ -1,6 +1,6 @@
 # React Native
 
-## Navegación - Expo Router
+## ⛵︎ Navegación - Expo Router
 
 - `expo-router` es un sistema de navegación para React Native (Expo) basado en archivos.
 - Permite organizar la navegación utilizando una estructura de carpetas.
@@ -788,3 +788,81 @@ export default function RootLayout() {
   );
 }
 ```
+
+### Usando un Drawer
+
+- Para poder usar un Drawer primero tenemos que instalar algunos módulos:
+
+```bash
+npx expo install @react-navigation/drawer react-native-gesture-handler react-native-reanimated
+```
+
+- Luego vamos a modificar el `app/_layout.tsx` para que sea un Drawer en lugar de un Stack.
+
+```javascript
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Drawer } from "expo-router/drawer";
+
+export default function RootLayout() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer>
+        <Drawer.Screen
+          name="index"
+          options={{ headerTitle: "Home", drawerLabel: "Home Label" }}
+        />
+        <Drawer.Screen name="about" options={{ headerTitle: "About" }} />
+        <Drawer.Screen name="profile" options={{ headerTitle: "Profile" }} />
+        <Drawer.Screen name="settings" options={{ headerTitle: "Settings" }} />
+        <Drawer.Screen
+          name="modal"
+          options={{ drawerItemStyle: { display: "none" } }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
+  );
+}
+```
+
+- En este cambio lo que estamos haciendo es establecer que hay un Drawer en la navegación.
+- Esto se puede hacer gracias a que React Navigation tiene un Drawer que expo-router utiliza.
+- Para ocultar el modal de las opciones usamos display:none.
+- Ahora podemos navegar al drawer presionando el menú hamburguesa del header.
+- Luego podemos navegar a cualquiera de los otras secciones.
+- Drawer también se puede abrir / ocultar de la siguiente manera modificanod `app/index.tsx`
+
+```javascript
+import { View, StyleSheet, Button } from "react-native";
+import { Link, useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
+
+export default function Index() {
+  const navigation = useNavigation();
+
+  const toggleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
+  return (
+    <View style={styles.container}>
+      <Link href="/about">Navegar a About</Link>
+      <Link href="/settings">Navegar a Settings</Link>
+      <Link href="/modal">Navegar a Modal</Link>
+      <Button title="Abrir Drawer" onPress={toggleDrawer} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+```
+
+- Por medio del navegador `(useNavigation)` podemos hacer dispatch de un action.
+- En este caso podemos usar `DrawerActions.toggleDrawer()` del módulo `@react-navigation/native`.
+- Al presionar el botón `Abrir Drawer` lo que hacemos es llamar al navegador y decirle que lance una acción para abrir el Drawer.
+- Como están vinculados `expo-router` con `react-navigation` podemos usarlo de esta forma.
