@@ -90,7 +90,6 @@
 
 <!--
 Tutoriales de Expo
-- Navegación
 - Redux / Manejo de estado
 - Firebase Login
 - Usar la cámara
@@ -98,82 +97,15 @@ Tutoriales de Expo
 
 - Notificaciones
 - Modulo Nativo
-- Accessibilidad
 
 
 ## Componentes Básicos:
-
-## Listas y desplazamiento:
-
-- [FlatList](flatlist.md)
-- [SectionList](sectionlist.md)
-
-## Arquitectura de componentes:
-
-- [Componiendo componentes](ccomp.md)
-- [Ciclo de vida del componente](clife.md)
-- [Hooks para componentes funcion](hookscom.md)
 
 ## Gestión de estado:
 
 - [Gestión de estado](statemanagement.md)
 - [Estado en componentes de clase (Class)](stateclass.md)
 - [Uso de hooks para estado en componentes funcionales](hookfunc.md)
-
-## Flujo de datos:
-
-- [Flujo de datos](dataflow.md)
-- [Levantando estado](lifting.md)
-- [Gestión de estado complejo con useReducer o API de contexto (Context)](managingcomplexstate.md)
-
-## Patrones avanzados:
-
-- [Patrones avanzados](advanced.md)
-- [Componentes de orden superior (Higher-order)](higher.md)
-- [Render props](render.md)
-
-# Navegación y estilos en React Native
-
-## Stack Navigator
-
-- [Navegación y estilo de React Native](reactstyle.md)
-- [Stack Navigator](stacknavigator.md)
-
-## Navegador de pestañas (Tab Navigator)
-
-- [Configuración y uso básico](setupbasicusage.md)
-- [Navegación entre pantallas](navigatingscreens.md)
-- [Navegador de pestañas (Tabs)](tabnav.md)
-- [Configuración y personalización](setupcustom.md)
-- [Manipulación de la navegación por pestañas](handletabnav.md)
-
-## Drawer Navigator
-
-- [Drawer Navigator](drawnav.md)
-- [ Implementación de un menú lateral](implementside.md)
-- [Configuración de las opciones del cajón (drawer options)](configdrawer.md)
-- [Diseño visual de componentes usando hoja de estilo (StyleSheet)](stylingstylesheet.md)
-
-## Estilo básico
-
-- [Estilo básico](basicstyling.md)
-- [Usando StyleSheet.create para crear una hoja de estilos](stylesheet.md)
-- [Aplicando estilos a componentes](stylecomponents.md)
-- [Propiedades de estilo comunes](commonstyle.md)
-- [Propiedades de estilo para componentes Text, View e Image](textviewimage.md)
-- [Manejo de diferentes tamaños de dispositivo](handledifferent.md)
-
-## Diseño de layouts utilizando Flexbox
-
-- [Flexbox para Layout Design](flexboxlayoutdesign.md)
-- [Fundamentos de Flexbox](flexboxbasics.md)
-- [Propiedades de Flexbox](flexproperties.md)
-- [Ejemplos prácticos y diseños](examplesflex.md)
-
-## Entrada de datos por parte del Usuario y API's
-
-- [Entrada de texto y manejo de las interacciones del usuario](textinputuser.md)
-- [Obtener datos de servidor remoto y mostrarlos en la App](fetchingdataapi.md)
 
 ## Integración con Firebase y desarrollo de aplicaciones
 

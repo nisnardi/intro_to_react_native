@@ -780,4 +780,8 @@ const styles = StyleSheet.create({
 
 ![Aprendiste Hook's](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHZwNGE1MjdzbXhicGdzcm02Zmx1M2R4bmlhZWhrZWJiaThkOHEzbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9p8hgZoQjj9y8/giphy.gif)
 
-![App de ejemplo](https://github.com/nisnardi/effect-context-fetch)
+[App de ejemplo](https://github.com/nisnardi/effect-context-fetch)
+
+#### Extra
+
+[Tutorial React hooks | Todos los React hooks explicados 🪝](https://www.youtube.com/watch?v=jaLl4ErmU44)

@@ -2912,4 +2912,4 @@ Excelente trabajo. Espero que ahora sientas que entiendes mejor cómo funciona R
 
 ![Fiesta de codeo](https://giphy.com/gifs/microsoft-party-time-bill-gates-l3q2zbskZp2j8wniE)
 
-![App de ejemplo](https://github.com/nisnardi/tic_tact_toe)
+[App de ejemplo](https://github.com/nisnardi/tic_tact_toe)

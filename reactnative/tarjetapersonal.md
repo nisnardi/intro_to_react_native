@@ -1880,4 +1880,4 @@ export const Icono = ({
 
 ![Congrats](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDkycjNzNHZyNmE5bnp2emhhdWRzYXhzZzlpYmc3dTFpM2dkZjkybiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jJQC2puVZpTMO4vUs0/giphy.gif)
 
-![App de ejemplo](https://github.com/nisnardi/rn_tarjeta_personal)
+[App de ejemplo](https://github.com/nisnardi/rn_tarjeta_personal)

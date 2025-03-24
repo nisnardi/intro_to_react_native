@@ -920,4 +920,4 @@ const styles = StyleSheet.create({
 }
 ```
 
-![App de ejemplo](https://github.com/nisnardi/navigation)
+[App de ejemplo](https://github.com/nisnardi/navigation)
