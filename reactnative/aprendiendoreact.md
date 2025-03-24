@@ -1842,3 +1842,378 @@ setAnimales(newState);
 > Con todo lo que vimos hasta acá podemos decir que sabemos bastante sobre React!!
 
 ![Coding](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExc25mZnY3emZnOXAxNXB0Y24zM3VxNG51d3JpdTZiOGgzb3o0NTBjNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ws6T5PN7wHv3cY8xy8/giphy.gif)
+
+### Usando () en nuestras rutas
+
+- `expo-router` nos permite usar directorios con nombres que empizan y terminan con `(nombre)`.
+- Los paréntesis nos permiten organizar nuestros archivos de la manera que nosotros queremos pero sin agregar una estructura de ruta.
+- Pensemos que tenemos la siguiente estructura de archivos:
+
+```bash
+app/
+│── (auth)/
+│   │── login.tsx
+│   │── register.tsx
+│── (dashboard)/
+│   │── home.tsx
+│   │── profile.tsx
+│── index.tsx
+```
+
+- En este caso `/` hace referencia a `app/index.tsx`.
+- Dado que usamos `()` para `(auth)` y `(dashboard)` parece como si fuera `/auth` y `/dashboard` cuando en realidad sigue siendo `/login.tsx` (sin auth) y `/home.tsx` (sin dashboard).
+- De esta manera usando `()` podemos tener una estructura de directorio que nosotros queremos pero sin modificar la estructura de la ruta.
+
+#### ¿Por qué utilizar () en expo-router?
+
+- **Mejor organización**: podes agrupar páginas relacionadas sin afectar a la URL.
+- **Escalabilidad mejorada**: mantener los archivos estructurados a la vez que mantenes un esquema simple para la URL.
+- **URLs más limpias**: no hay segmentos innecesarios en la ruta URL.
+
+### Simulando una autenticación
+
+- Para simular que tenemos autenticación de nuestra app vamos a modificar la estructura de nuestros archivos.
+- Creamos una nueva carpeta con el nombre de `(protected)` y movemos todos nuestros archivos dentro de esta carpeta.
+- Luego creamos 2 nuevos archivos `app/index.tsx` y `app/_layout.tsx`
+- Ahora deberías tener una estructura similar a esta:
+
+```bash
+app/
+│── (protected)/
+│   │── modal
+│   │── settings
+│   │── _layout.tsx
+│   │── about.tsx
+│   │── index.tsx
+│   │── profile.tsx
+│── index.tsx
+│── _layout.tsx
+```
+
+- La idea es que `index.tsx` va a ser la pantalla de login y el resto de las pantallas va a tener una protección.
+- El usuario tiene que ingresar unas credenciales y si se puede autenticar entonces va a poder ver el contenido del resto de la aplicación mientras que si no lo hace sólo verá el login.
+- Este ejemplo usa una seguridad SUPER básica pero es más que nada para entender el concepto de cómo funcionaría el navegador si tenemos autenticación.
+- También nos da la posibilidad de usar rutas con `()` para agregar un estructura a nuestros archivos sin modificar las rutas existentes.
+- Dado que varias de las pantallas van a necesitar saber si el usuario está logeado o no vamos a necesitar un contexto para compartir la información del usuario.
+- Creamos una carpeta nueva con el nombre de `app/context` y dentro creamos el archivos `auth.tsx` con el siguiente código:
+
+```javascript
+// app/context/auth.ts
+import React, { createContext, useState, useContext } from "react";
+const AuthContext = (createContext < AuthContextType) | (null > null);
+
+type User = {
+  name: string,
+};
+
+type AuthContextType = {
+  user: User | null,
+  login: (username: string) => void,
+  logout: () => void,
+};
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = (useState < User) | (null > null);
+
+  const login = (username: string) => {
+    setUser({ name: username });
+  };
+
+  const logout = () => {
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
+```
+
+- Ahora que tenemos el context lo podemos utilizar para que se pueda consumir desde cualquier lado de la aplicación.
+- Un buen lugar para hacer esto es en el `_layout.tsx` donde definimos las rutas a nivel principal en `app/_layout.tsx`.
+
+```javascript
+// app/_layout.tsx
+import { Stack } from "expo-router";
+import { AuthProvider } from "@/context/auth";
+
+export default function Layout() {
+  return (
+    <AuthProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </AuthProvider>
+  );
+}
+```
+
+- En este layout estamos estableciendo que el `AuthProvider` que creamos en el contexto puede ser consumido desde cualquier lado de la app.
+- Luego utilizamos `Stack` como nuestro navegador principal y le sacamos el Header usando la propiedad `headerShown` con el valor `false`.
+- Ahora podemos crear la pantalla de `app/index.tsx` para mostrar el login. Primero logremos que no se vea nada para estar seguros que está funcionando.
+
+```javascript
+// app/index.tsx
+import { View, StyleSheet } from "react-native";
+
+export default function Index() {
+  return <View style={styles.container}></View>;
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+```
+
+- Al inicial la app ahora deberíamos ver el contenido de `app/index.tsx` en lugar del resto del contenido.
+- Antes veíamos toda la app dado que `(protected)` no genera ningúna nueva ruta y se estaba cargando el `index.tsx` que estaba dentro.
+- Tenemos que modificar `(protected)/index.tsx` para que tenga otro nombre a la hora de navegar.
+- Renombramos el archivo `(protected)/index.tsx` por ``(protected)/home.tsx`.
+
+```javascript
+import { View, StyleSheet, Button } from "react-native";
+import { Link, useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
+
+export default function Home() {
+  const navigation = useNavigation();
+
+  const toggleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
+  return (
+    <View style={styles.container}>
+      <Link href="/about">Navegar a About</Link>
+      <Link href="/settings">Navegar a Settings</Link>
+      <Link href="/modal">Navegar a Modal</Link>
+      <Button title="Abrir Drawer" onPress={toggleDrawer} />
+      <Link href="/_sitemap">Sitemap</Link>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+```
+
+- Cambiamos el nombre del componente de `Index` a `Home`.
+- Seguro con este cambio rompimos la navegación de la app pero después lo vamos a ir arreglando.
+- Ahora creamos la pantalla de login en `app/login.tsx`:
+
+```javascript
+import { useRouter } from "expo-router";
+import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useState } from "react";
+import { useAuth } from "@/context/auth";
+
+export default function Index() {
+  const [username, setUsername] = useState("");
+  const { login } = useAuth();
+  const router = useRouter();
+
+  const handleLogin = () => {
+    login(username);
+    router.replace("/home"); // Redirect a la pantalla home
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>Login</Text>
+      <TextInput
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        style={styles.input}
+      />
+      <Button title="Login" onPress={handleLogin} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: { borderWidth: 1, width: 200, marginBottom: 10, padding: 8 },
+});
+```
+
+- En esta pantalla agregamos un campo de texto para que el usuario pueda ingresar su nombre.
+- Generalmente ingresaríamos un password y validaríamos el error pero por ahora lo dejamos así para enfocarnos en la navegación.
+- Cuando el usuario ingresa un nombre lo re-direccionamos a la `app/(protected)/home.tsx` que es nuestra pantalla principal.
+- Ahora el usuario puede ingresar a la app y ver el contenido.
+- Tenemos que darle al usuario una opción para hacer logout también.
+- Para esto podemos modificar el `app/(protected)/_layout.tsx` que tiene la configuración del Drawer para agregar un botón en el header que al presionarlo nos lleve a la pantalla de login y también borre al usuario logeado.
+- Dado que tenemos la función `logout` del contexto que creamos podemos utilizarla para borrar al usuario.
+- Modificamos el archivo `app/(protected)/_layout.tsx` de la siguiente forma:
+
+```javascript
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Drawer } from "expo-router/drawer";
+import { Button } from "react-native";
+import { useAuth } from "@/context/auth";
+import { useRouter } from "expo-router";
+
+export default function RootLayout() {
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer
+        screenOptions={{
+          headerRight: () => (
+            <Button
+              title="Logout"
+              onPress={() => {
+                logout();
+                router.replace("/");
+              }}
+            />
+          ),
+        }}
+      >
+        <Drawer.Screen
+          name="index"
+          options={{ headerTitle: "Home", drawerLabel: "Home Label" }}
+        />
+        <Drawer.Screen name="about" options={{ headerTitle: "About" }} />
+        <Drawer.Screen name="profile" options={{ headerTitle: "Profile" }} />
+        <Drawer.Screen name="settings" options={{ headerTitle: "Settings" }} />
+        <Drawer.Screen
+          name="modal"
+          options={{ drawerItemStyle: { display: "none" } }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
+  );
+}
+```
+
+- Con esto ya podemos ver un botón de logout en el header de nuestro drawer.
+
+```javascript
+import { useAuth } from "@/context/auth";
+import { useRouter } from "expo-router";
+```
+
+- Primero importamos `useAuth` que es el contexto que creamos.
+- Luego importamos `useRouter` para poder acceder al router.
+
+```javascript
+const { logout } = useAuth();
+const router = useRouter();
+```
+
+- Dentro del componente usamos `useAuth` para acceder a la función `logout` que está definida en el contexto.
+- También usamos `useRouter` para conseguir el objeto `router` y luego usarlo para navager.
+
+```javascript
+<Drawer
+  screenOptions={{
+    headerRight: () => (
+      <Button
+        title="Logout"
+        onPress={() => {
+          logout();
+          router.replace("/");
+        }}
+      />
+    ),
+  }}
+>
+```
+
+- Modificamos `Drawer` para decirle que todas las pantallas que estén dentro del Drawer tengan un botón al costado derecho con el texto `Logout`.
+- También se puede definir en los headers la propiedad `headerLeft` para definir algo del lado izquierdo del encabezado.
+- Le pasamos a `headerRight` una función que devuelve un componente que es un Button que al presionarlo llama a la función `logout` y luego utiliza el `router.replace('/')` para remplazar la navegación actual por `/` que nos lleva al documento `app/index.tsx` que es nuestra pantalla de login.
+- Todo esto está muy bien para la App corriendo en un dispositivo `iOS o Android` pero que pasa con web?.
+- Ejecuta la app en el navegador `(presiona w)` y navegá a la siguiente URL: `http://localhost:8081/home`.
+- Parece que nuestra seguridad no es muy segura, no?
+- El problema es que nunca validamos si el usuario está logeado o no.
+- En las apps no podemos navegar a las rutas por medio de ingresar la ruta a mano.
+- Agreguemos entonces una validación para al menos saber si el usuario está logeado o no.
+- Modificamos `app/(protected)/_layout.tsx` de la sigmiente forma:
+
+```javascript
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Drawer } from "expo-router/drawer";
+import { Button } from "react-native";
+import { useAuth } from "@/context/auth";
+import { Redirect, useRouter } from "expo-router";
+
+export default function RootLayout() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  if (!user) {
+    return <Redirect href="/" />;
+  }
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer
+        screenOptions={{
+          headerRight: () => (
+            <Button
+              title="Logout"
+              onPress={() => {
+                logout();
+                router.replace("/");
+              }}
+            />
+          ),
+        }}
+      >
+        <Drawer.Screen
+          name="index"
+          options={{ headerTitle: "Home", drawerLabel: "Home Label" }}
+        />
+        <Drawer.Screen name="about" options={{ headerTitle: "About" }} />
+        <Drawer.Screen name="profile" options={{ headerTitle: "Profile" }} />
+        <Drawer.Screen name="settings" options={{ headerTitle: "Settings" }} />
+        <Drawer.Screen
+          name="modal"
+          options={{ drawerItemStyle: { display: "none" } }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
+  );
+}
+```
+
+- Para este caso necesitamos acceder al usuario para saber si está logeado o no.
+
+```javascript
+const { user, logout } = useAuth();
+```
+
+- Una vez que tenemos el usuario podemos validarlo usando un if statement.
+- Si el usuario no está validado entonces usamos un componente de `expo-router` que se llama `Redirect` que redirecciona al usuario a la dirección especificada en `href` y en este caso lo mandamos a `/`.
+
+```javascript
+if (!user) {
+  return <Redirect href="/" />;
+}
+```
+
+- De esta forma cualquier ruta que está dentro de `(protected)` necesita que el usuario esté autenticado para poder ver el contenido.
+- Ahora sólo nos queda arreglar los links que navegaban a `/` para que lo hagan a `home` y agregar algún tipo de validación para que el usuario no pueda entrar a la app si el campo de texto está vacio. (ayudín? validar si username está vacio antes de navegar).
+- Esta tarea te queda a vos para practicar!
+- Con esto ya sabemos como navegar en React Native usando `expo-router`, Felicitaciones!!!
+
+![navegar](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWZ4cTh5cndhajFvMDliN2hqeTAxYmFxOGIydm94ZTd1bjl5cm0yZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2JhL0Gpfbvs4Y07K/giphy.gif)
