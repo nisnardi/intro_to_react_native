@@ -85,9 +85,9 @@
 - [StickerSmash - Expo](reactnative/stickersmash.md)
 - [Hooks? Effect? Context? y Fetch?](reactnative/hookseffectcontextfetch.md)
 - [Navegación - Expo Router](reactnative/navegacion.md)
+- [Principios de Redux - Manejo de estado](reactnative/basicredux.md)
 
 <!-- - [Ahora a distribuir y publicar nuestra App](reactnative/eastutorial.md) -->
-
 <!--
 Tutoriales de Expo
 - Redux / Manejo de estado
