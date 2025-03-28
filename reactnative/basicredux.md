@@ -924,6 +924,7 @@ export default function RootLayout() {
 - En este caso le asignamos un title a cada ruta para que sea más descriptivo.
 - También le agregamos un encabezado derecho a la pantalla index para poder navegar al contador.
 - Con esto cerramos nuestra app de redux!
+- Podes aprender más sobre Redux [leyendo la documentación oficial](https://redux.js.org).
 - Otro logro más, felicitaciones! ahora aprendiste las bases de Redux.
 
 ![Redux!](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmRqMXgxemM0NGpkNXBnZzE2eGNvYjd0bjQ2MTN1MDRnODZocWV1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AP5AEWUWAERqVEP4Yv/giphy.gif)
