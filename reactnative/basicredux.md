@@ -858,6 +858,74 @@ deleteTodo: (state, action) => {
 
 - Por último usamos filter para buscar el todo que queremos borrar de la lista y creamos un nuevo estado sin ese elemento.
 - Podemos ver todas estas cosas en el devtools para ver como se emiten las acciones, que valores se pasan como parámetro y también como se actualiza el estado.
+- Ahora terminemos la app. Primero a definir la pantalla `app/todo.tsx`:
+
+```javascript
+import { View, Text, StyleSheet } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+
+const Todo = () => {
+  const todos = useSelector((state: RootState) => state.todos.data);
+  const { id } = useLocalSearchParams();
+  const todo = todos.find((todoItem) => parseInt(id) === todoItem.id);
+
+  return (
+    <View style={styles.container}>
+      {todo && <Text style={styles.text}>ID: {todo.id}</Text>}
+      {todo && <Text style={styles.text}>Text: {todo.text}</Text>}
+    </View>
+  );
+};
+
+export default Todo;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 24,
+  },
+});
+```
+
+- Esta pantalla recibe el parámetro id y usa un selector como para encontrar el todo en el estado.
+- También podemos modificar `app/_layout.tsx` para manejar las rutas:
+
+```javascript
+import { Link, Stack } from "expo-router";
+import { Provider } from "react-redux";
+
+import { store } from "@/redux/store";
+
+export default function RootLayout() {
+  return (
+    <Provider store={store}>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Todos",
+            headerRight: () => <Link href="/contador">Ir a Contador</Link>,
+          }}
+        />
+        <Stack.Screen name="contador" options={{ title: "Contador" }} />
+        <Stack.Screen name="todo" options={{ title: "Todo Detail" }} />
+      </Stack>
+    </Provider>
+  );
+}
+```
+
+- En este caso le asignamos un title a cada ruta para que sea más descriptivo.
+- También le agregamos un encabezado derecho a la pantalla index para poder navegar al contador.
+- Con esto cerramos nuestra app de redux!
 - Otro logro más, felicitaciones! ahora aprendiste las bases de Redux.
 
 ![Redux!](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmRqMXgxemM0NGpkNXBnZzE2eGNvYjd0bjQ2MTN1MDRnODZocWV1dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AP5AEWUWAERqVEP4Yv/giphy.gif)
+
+[App de ejemplo](https://github.com/nisnardi/redux-basics)
