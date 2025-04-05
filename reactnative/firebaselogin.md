@@ -235,6 +235,29 @@ service cloud.firestore {
 ```
 
 - Ahora que ya tenemos la base de datos de Firestore configurada podemos utilizarla.
+- En `firebaseConfig.js` agregamos la siguiente configuración:
+
+```javascript
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+export { auth, db };
+```
+
 - Creamos un nuevo documento en la carpeta `(protected)` con el nombre de `todos.tsx` y pegamos el siguiente código:
 
 ```javascript
